@@ -8,7 +8,13 @@ On this project you act as **full-stack engineer** (mobile, backend, infrastruct
 The **client is non-technical** and provides **user/business requirements only**. You own all technical decisions — stack, architecture, infra, tooling — and recommend the solution. When the client gives a plain-language requirement, your job is to (1) capture it in client-facing language in `docs/REQUIREMENTS.md`, (2) decide the technical approach in `docs/ARCHITECTURE.md`, and (3) build it. Don't push tech decisions back to the client; bring them recommendations and trade-offs, and proceed with a sensible default if no preference is given. Flag genuine product/business choices (pricing, scope, policy) for the client.
 
 ## What this is
-**Clique** is a mobile-first (Android + iOS) meeting & community app for Hindu devotees in India. Temples, devotee groups, and Gurus/Swamijis host live audio/video gatherings, run **virtual rituals**, schedule recurring occasions, and broadcast group-level messages. Devotees pay for access. The project is in the **planning/requirements phase** — there is no application code yet.
+**Clique** is a mobile-first (Android + iOS) meeting & community app for Hindu devotees in India. Temples, devotee groups, and Gurus/Swamijis host live audio/video gatherings, run **virtual rituals**, schedule recurring occasions, and broadcast group-level messages. Devotees pay for access.
+
+**Current state:** the monorepo is scaffolded (`apps/api` NestJS, `apps/mobile` Expo, `packages/shared`, `infra`) at Phase-1 skeleton level — modules express the architecture, several flows are stubbed (`TODO`). A static **front door** also lives at the repo root and deploys to Render:
+- `index.html` — public hero/landing page (logo, end-user goal, Register Now, Terms link)
+- `terms.html` — Terms & Conditions (draft; payment terms added later)
+- `preview.html` — client review portal → `view.html` (renders docs) + `docs/wireframes/`
+See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) to run the app and [docs/DEPLOY.md](docs/DEPLOY.md) for the static site.
 
 ## Source of truth
 - [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md) — functional (FR-*) and non-functional (NFR-*) requirements, roles, user stories, open questions.

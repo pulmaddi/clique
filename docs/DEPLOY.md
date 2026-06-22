@@ -7,11 +7,15 @@ Render deploys from a Git repository, so the flow is: **push to GitHub → conne
 ---
 
 ## What gets deployed
-- `index.html` — landing portal (links everything)
+- `index.html` — public **hero / landing page** (logo, goal, Register Now, Terms)
+- `terms.html` — Terms & Conditions (draft; payment terms added later)
+- `preview.html` — client review portal (links wireframes + all docs)
 - `view.html` — in-browser viewer that renders the `.md` docs nicely
 - `docs/` — requirements, architecture, roadmap, branding, glossary
 - `docs/wireframes/index.html` — the screen mockups
 - `render.yaml` — Render blueprint (static site, no build step)
+
+> The Render root URL now shows the **landing page**; the review portal is at `/preview.html`.
 
 No build, no server, no secrets — it's all static files.
 
