@@ -1,0 +1,18 @@
+# Dependencies / build (for later app phases)
+node_modules/
+dist/
+build/
+.expo/
+
+# Env & secrets — never commit
+.env
+.env.*
+*.pem
+*.key
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

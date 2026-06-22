@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bhakti Setu — Wireframes</title>
+<style>
+  :root{
+    --saffron:#E8741E; --maroon:#7A1F2B; --cream:#FFF6EC; --green:#2E7D4F;
+    --gold:#C99A2E; --ink:#2A2118; --muted:#8A7B6B; --line:#E7D9C7; --card:#fff;
+  }
+  *{box-sizing:border-box;font-family:"Segoe UI",system-ui,Arial,sans-serif}
+  body{margin:0;background:#efe7da;color:var(--ink)}
+  header.page{padding:28px 24px;background:linear-gradient(135deg,var(--maroon),var(--saffron));color:#fff}
+  header.page h1{margin:0 0 4px;font-size:24px}
+  header.page p{margin:0;opacity:.9;font-size:14px}
+  .legend{padding:14px 24px;font-size:13px;color:#5b4a38;background:#fbf3e7;border-bottom:1px solid var(--line)}
+  .gallery{display:flex;flex-wrap:wrap;gap:28px;padding:28px;justify-content:center}
+  .screen{width:300px}
+  .screen > .cap{font-size:13px;font-weight:600;color:var(--maroon);margin:0 0 8px;text-align:center}
+  .screen > .sub{font-size:11px;color:var(--muted);text-align:center;margin:-4px 0 10px}
+
+  /* phone frame */
+  .phone{width:300px;height:610px;background:var(--cream);border:10px solid #1d1712;border-radius:34px;
+    overflow:hidden;position:relative;box-shadow:0 12px 30px rgba(0,0,0,.22);display:flex;flex-direction:column}
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:20px;background:#1d1712;
+    border-bottom-left-radius:12px;border-bottom-right-radius:12px;z-index:5}
+  .statusbar{height:26px;display:flex;justify-content:space-between;align-items:center;padding:0 16px;font-size:10px;color:var(--ink);flex:0 0 auto}
+  .body{flex:1;overflow:hidden;position:relative}
+  .pad{padding:14px 16px}
+
+  .brand{font-weight:700;color:var(--maroon)}
+  .om{color:var(--saffron)}
+  h2.s{font-size:17px;margin:4px 0 2px}
+  .small{font-size:11px;color:var(--muted)}
+  .field{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--muted);margin:8px 0}
+  .btn{background:var(--saffron);color:#fff;border:none;border-radius:10px;padding:11px;text-align:center;font-size:13px;font-weight:600;margin-top:6px}
+  .btn.alt{background:#fff;color:var(--maroon);border:1px solid var(--maroon)}
+  .btn.green{background:var(--green)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+  .chip{font-size:10px;padding:5px 9px;border-radius:14px;background:#fff;border:1px solid var(--line);color:#5b4a38}
+  .chip.on{background:var(--maroon);color:#fff;border-color:var(--maroon)}
+
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(135deg,var(--maroon),var(--saffron));color:#fff}
+  .topbar .greet{font-size:13px;font-weight:600}
+  .topbar .loc{font-size:10px;opacity:.85}
+  .avatar{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:12px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px;margin:10px 0;box-shadow:0 2px 6px rgba(0,0,0,.04)}
+  .row{display:flex;gap:10px;align-items:center}
+  .thumb{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--saffron));flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px}
+  .live{font-size:9px;background:#d8362f;color:#fff;padding:2px 6px;border-radius:8px;font-weight:700}
+  .title{font-size:12px;font-weight:600}
+  .meta{font-size:10px;color:var(--muted)}
+  .sectionhdr{display:flex;justify-content:space-between;align-items:center;margin:12px 0 2px}
+  .sectionhdr b{font-size:12px}
+  .sectionhdr span{font-size:10px;color:var(--saffron)}
+
+  /* ritual icon grid */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+  .tile{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 6px;text-align:center}
+  .tile .ic{font-size:24px}
+  .tile .lbl{font-size:10px;margin-top:6px;color:#5b4a38;font-weight:600}
+  .tile .lbl small{display:block;color:var(--muted);font-weight:400}
+
+  /* tab bar */
+  .tabbar{position:absolute;bottom:0;left:0;right:0;height:50px;background:#fff;border-top:1px solid var(--line);
+    display:flex;justify-content:space-around;align-items:center}
+  .tab{font-size:9px;color:var(--muted);text-align:center}
+  .tab .ic{font-size:16px;display:block}
+  .tab.on{color:var(--saffron);font-weight:700}
+
+  /* live meeting */
+  .stage{background:#13100c;height:100%;display:flex;flex-direction:column;color:#fff}
+  .speaker{flex:1;background:radial-gradient(circle at 50% 35%,#3a2c1c,#13100c);display:flex;align-items:center;justify-content:center;position:relative}
+  .speaker .face{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--maroon));display:flex;align-items:center;justify-content:center;font-size:34px}
+  .speaker .name{position:absolute;bottom:10px;left:12px;font-size:11px;background:rgba(0,0,0,.45);padding:3px 8px;border-radius:8px}
+  .speaker .count{position:absolute;top:10px;right:12px;font-size:10px;background:rgba(0,0,0,.45);padding:3px 8px;border-radius:8px}
+  .reactions{position:absolute;bottom:60px;right:14px;font-size:20px;line-height:1.4}
+  .filmstrip{display:flex;gap:6px;padding:8px;overflow:hidden}
+  .pip{width:46px;height:46px;border-radius:8px;background:#2a2018;display:flex;align-items:center;justify-content:center;font-size:18px;flex:0 0 auto}
+  .controls{display:flex;justify-content:space-around;align-items:center;padding:12px 6px;background:#0c0a07}
+  .cbtn{width:38px;height:38px;border-radius:50%;background:#2a2018;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .cbtn.end{background:#d8362f}
+  .cbtn.on{background:var(--saffron)}
+
+  .price{font-size:15px;font-weight:700;color:var(--maroon)}
+  .listitem{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line);font-size:12px}
+  .badge{font-size:9px;background:#fbe7d3;color:var(--saffron);padding:2px 7px;border-radius:8px;font-weight:700}
+  .tierbox{border:1px solid var(--line);border-radius:12px;padding:11px;margin:9px 0}
+  .tierbox.sel{border-color:var(--saffron);background:#fff7ef}
+  footer.page{padding:18px 24px;font-size:12px;color:#5b4a38;background:#fbf3e7;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<header class="page">
+  <h1>🪔 Bhakti Setu — App Wireframes</h1>
+  <p>Low-fidelity screen mockups for the Hindu devotee meeting &amp; ritual app · placeholder brand · v0.1 · 2026-06-22</p>
+</header>
+<div class="legend">
+  These are <b>wireframes</b> (layout &amp; flow), not final visuals. Brand name is a placeholder (see <code>docs/BRANDING.md</code>).
+  Flow: <b>Splash → Register → OTP → Home → Rituals → Ritual booking → Live group meeting → Host profile → Inbox → Subscribe.</b>
+</div>
+
+<div class="gallery">
+
+  <!-- 1. SPLASH -->
+  <div class="screen">
+    <p class="cap">1 · Splash / Brand</p>
+    <p class="sub">first launch</p>
+    <div class="phone"><div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="body" style="display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--maroon),var(--saffron));color:#fff">
+        <div style="font-size:54px">🪔</div>
+        <div style="font-size:22px;font-weight:700;margin-top:10px">Bhakti Setu</div>
+        <div style="font-size:11px;opacity:.9;margin-top:4px">Bridge of devotion</div>
+        <div style="position:absolute;bottom:30px;font-size:10px;opacity:.8">English · हिन्दी · తెలుగు</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. REGISTER -->
+  <div class="screen">
+    <p class="cap">2 · Register</p>
+    <p class="sub">phone + language</p>
+    <div class="phone"><div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="body"><div class="pad">
+        <h2 class="s">Create your account</h2>
+        <p class="small">Join temples, Gurus &amp; devotee groups near you.</p>
+        <div class="field">Full name</div>
+        <div class="field">🇮🇳 +91 &nbsp;|&nbsp; Mobile number</div>
+        <p class="small" style="margin-top:10px">Preferred language</p>
+        <div class="chips">
+          <span class="chip on">English</span>
+          <span class="chip">हिन्दी</span>
+          <span class="chip">తెలుగు</span>
+        </div>
+        <div class="field">📍 City / State (optional)</div>
+        <div class="btn">Send OTP</div>
+        <div class="btn alt">I already have an account</div>
+        <p class="small" style="text-align:center;margin-top:12px">By continuing you agree to the Terms &amp; Privacy Policy.</p>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- 3. OTP / LOGIN -->
+  <div class="screen">
+    <p class="cap">3 · Login / OTP verify</p>
+    <p class="sub">mobile OTP auth</p>
+    <div class="phone"><div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="body"><div class="pad">
+        <h2 class="s">Verify your number</h2>
+        <p class="small">We sent a 6-digit code to <b>+91 98XXX XX210</b></p>
+        <div class="chips" style="justify-content:center;margin:18px 0">
+          <span class="chip" style="width:34px;text-align:center">3</span>
+          <span class="chip" style="width:34px;text-align:center">9</span>
+          <span class="chip" style="width:34px;text-align:center">1</span>
+          <span class="chip" style="width:34px;text-align:center">·</span>
+          <span class="chip" style="width:34px;text-align:center">·</span>
+          <span class="chip" style="width:34px;text-align:center">·</span>
+        </div>
+        <p class="small" style="text-align:center">Resend code in 0:24</p>
+        <div class="btn">Verify &amp; continue</div>
+        <div class="card" style="margin-top:20px">
+          <p class="small">Or sign in with</p>
+          <div class="btn alt" style="margin-top:4px">Continue with Google</div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- 4. HOME DASHBOARD -->
+  <div class="screen">
+    <p class="cap">4 · Home dashboard</p>
+    <p class="sub">followed hosts + upcoming</p>
+    <div class="phone"><div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="body">
+        <div class="topbar">
+          <div><div class="greet">🙏 Namaste, Anjali</div><div class="loc">📍 Hyderabad</div></div>
+          <div class="avatar">A</div>
+        </div>
+        <div class="pad" style="padding-bottom:56px;overflow:auto;height:calc(100% - 54px)">
+          <div class="field">🔍 Search temples, Gurus, groups…</div>
+
+          <div class="card" style="background:linear-gradient(135deg,#fff7ef,#fbe7d3);border-color:#f0d3ad">
+            <div class="row">
+              <div class="thumb">🛕</div>
+              <div style="flex:1">
+                <span class="live">● LIVE</span>
+                <div class="title">Evening Aarti — Sri Venkateswara</div>
+                <div class="meta">2,140 watching · Telugu</div>
+              </div>
+            </div>
+            <div class="btn" style="margin-top:8px">Join live</div>
+          </div>
+
+          <div class="sectionhdr"><b>Upcoming occasions</b><span>See all</span></div>
+          <div class="card"><div class="row">
+            <div class="thumb">🕉️</div>
+            <div style="flex:1"><div class="title">Weekly Satsang — Swami Anand</div>
+              <div class="meta">Sun 7:00 PM · Subscriber</div></div>
+            <span class="badge">RSVP</span>
+          </div></div>
+          <div class="card"><div class="row">
+            <div class="thumb">🪔</div>
+            <div style="flex:1"><div class="title">Navaratri Special Puja</div>
+              <div class="meta">Fri 6:30 PM · ₹151</div></div>
+            <span class="badge">Book</span>
+          </div></div>
+
+          <div class="sectionhdr"><b>Following</b><span>Manage</span></div>
+          <div class="chips">
+            <span class="chip">🛕 Sri Venkateswara</span>
+            <span class="chip">🧘 Swami Anand</span>
+            <span class="chip">👥 Bhakti Mandali</span>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><span class="ic">🏠</span>Home</div>
+          <div class="tab"><span class="ic">🪔</span>Rituals</div>
+          <div class="tab"><span class="ic">📅</span>Events</div>
+          <div class="tab"><span class="ic">🔔</span>Inbox</div>
+          <div class="tab"><span class="ic">👤</span>Profile</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. RITUALS GRID -->
+  <div class="screen">
+    <p class="cap">5 · Rituals</p>
+    <p class="sub">tap an icon to begin</p>
+    <div class="phone"><div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="body">
+        <div class="topbar"><div class="greet">🪔 Virtual Rituals</div><div class="avatar">A</div></div>
+        <div class="pad" style="padding-bottom:56px;overflow:auto;height:calc(100% - 54px)">
+          <p class="small">Book a guided ceremony — group or personal (with your sankalpa).</p>
+          <div class="grid">
+            <div class="tile"><div class="ic">🪔</div><div class="lbl">Aarti<small>daily</small></div></div>
+            <div class="tile"><div class="ic">🌸</div><div class="lbl">Puja<small>archana</small></div></div>
+            <div class="tile"><div class="ic">🔥</div><div class="lbl">Havan<small>homam</small></div></div>
+            <div class="tile"><div class="ic">🛕</div><div class="lbl">Abhishekam</div></div>
+            <div class="tile"><div class="ic">📿</div><div class="lbl">Japa<small>chanting</small></div></div>
+            <div class="tile"><div class="ic">🪷</div><div class="lbl">Lakshmi Puja</div></div>
+            <div class="tile"><div class="ic">🐚</div><div class="lbl">Satyanarayan</div></div>
+            <div class="tile"><div class="ic">🌺</div><div class="lbl">Sankalp<small>personal</small></div></div>
+            <div class="tile"><div class="ic">✨</div><div class="lbl">More</div></div>
+          </div>
+          <div class="sectionhdr"><b>Festival specials</b><span>See all</span></div>
+          <div class="card"><div class="row">
+            <div class="thumb">🎉</div>
+            <div style="flex:1"><div class="title">Navaratri 9-day Puja series</div>
+              <div class="meta">Starts Fri · ₹751 full series</div></div>
+            <span class="badge">Book</span>
+          </div></div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="ic">🏠</span>Home</div>
+          <div class="tab on"><span class="ic">🪔</span>Rituals</div>
+          <div class="tab"><span class="ic">📅</span>Events</div>
+          <div class="tab"><span class="ic">🔔</span>Inbox</div>
+          <div class="tab"><span class="ic">👤</span>Profile</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. RITUAL DETAIL / SANKALPA -->
+  <div class="screen">
+    <p class="cap">6 · Ritual booking + Sankalpa</p>
+    <p class="sub">details before payment</p>
+    <div class="phone"><div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="body"><div class="pad" style="overflow:auto;height:100%">
+        <div class="row"><span style="font-size:14px">‹</span><h2 class="s" style="margin:0">Satyanarayan Puja</h2></div>
+        <div class="card" style="background:linear-gradient(135deg,#fff7ef,#fbe7d3)">
+          <div class="row"><div class="thumb">🐚</div>
+            <div><div class="title">Hosted by Sri Venkateswara Temple</div>
+            <div class="meta">Fri, 27 Jun · 6:30 PM IST · Telugu/Hindi</div></div></div>
+        </div>
+        <p class="small">A pandit performs the puja live; you join with your family name &amp; sankalpa. Digital prasad sent after.</p>
+
+        <div class="sectionhdr"><b>Your Sankalpa</b></div>
+        <div class="field">Name (for sankalpa)</div>
+        <div class="field">Gotra (optional)</div>
+        <div class="field">📍 Place / city</div>
+        <div class="field">Your intention / prayer</div>
+
+        <div class="sectionhdr"><b>Add offerings</b></div>
+        <div class="listitem"><span>🌸 Flower garland</span><span>Free</span></div>
+        <div class="listitem"><span>🪔 Diya offering</span><span>+ ₹51</span></div>
+        <div class="listitem"><span>🥥 Coconut &amp; prasad kit</span><span>+ ₹101</span></div>
+
+        <div class="card" style="margin-top:12px">
+          <div class="row" style="justify-content:space-between">
+            <span class="small">Total</span><span class="price">₹252</span>
+          </div>
+          <div class="btn green">Pay with UPI / Card →</div>
+          <p class="small" style="text-align:center;margin-top:6px">Secured by Razorpay · GST invoice provided</p>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- 7. LIVE GROUP MEETING -->
+  <div class="screen">
+    <p class="cap">7 · Live group meeting</p>
+    <p class="sub">broadcast + reactions</p>
+    <div class="phone"><div class="notch"></div>
+      <div class="statusbar" style="color:#fff;background:#13100c"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="body"><div class="stage">
+        <div class="speaker">
+          <span class="count">👁 2,140</span>
+          <div class="face">🧘</div>
+          <div class="reactions">🪔<br>🌸<br>🙏</div>
+          <div class="name">Swami Anand · Host 🎙️</div>
+        </div>
+        <div class="filmstrip">
+          <div class="pip">👤</div><div class="pip">👤</div><div class="pip">🙋</div>
+          <div class="pip">👤</div><div class="pip" style="font-size:11px">+2.1k</div>
+        </div>
+        <div class="controls">
+          <div class="cbtn">🎤</div>
+          <div class="cbtn on">✋</div>
+          <div class="cbtn">💬</div>
+          <div class="cbtn">🪔</div>
+          <div class="cbtn end">📞</div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- 8. HOST PROFILE -->
+  <div class="screen">
+    <p class="cap">8 · Host profile</p>
+    <p class="sub">temple / Guru / group</p>
+    <div class="phone"><div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="body"><div style="overflow:auto;height:100%">
+        <div style="height:90px;background:linear-gradient(135deg,var(--maroon),var(--saffron))"></div>
+        <div class="pad" style="margin-top:-34px">
+          <div class="row">
+            <div class="thumb" style="width:56px;height:56px;font-size:24px;border:3px solid #fff">🛕</div>
+            <div style="flex:1"><div class="title" style="font-size:14px">Sri Venkateswara Temple</div>
+              <div class="meta">12,480 followers · Telugu · Hyderabad ✔︎ Verified</div></div>
+          </div>
+          <div class="chips" style="margin-top:8px">
+            <span class="btn" style="flex:1;margin:0">Follow</span>
+            <span class="btn alt" style="flex:1;margin:0">Subscribe</span>
+          </div>
+          <div class="sectionhdr"><b>Upcoming</b></div>
+          <div class="card"><div class="row"><div class="thumb">🪔</div>
+            <div style="flex:1"><div class="title">Daily Suprabhatam</div><div class="meta">Tomorrow 5:30 AM · Free</div></div></div></div>
+          <div class="card"><div class="row"><div class="thumb">🐚</div>
+            <div style="flex:1"><div class="title">Satyanarayan Puja</div><div class="meta">Fri 6:30 PM · ₹252</div></div>
+            <span class="badge">Book</span></div></div>
+          <div class="sectionhdr"><b>Recent posts</b></div>
+          <div class="card"><div class="title">🌼 Navaratri schedule released</div>
+            <div class="meta">Tap to view the 9-day plan &amp; timings.</div></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- 9. INBOX / BROADCASTS -->
+  <div class="screen">
+    <p class="cap">9 · Inbox / Broadcasts</p>
+    <p class="sub">group-level messages</p>
+    <div class="phone"><div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="body">
+        <div class="topbar"><div class="greet">🔔 Inbox</div><div class="avatar">A</div></div>
+        <div class="pad" style="padding-bottom:56px;overflow:auto;height:calc(100% - 54px)">
+          <div class="card"><div class="row"><div class="thumb">🛕</div>
+            <div style="flex:1"><div class="title">Sri Venkateswara Temple</div>
+              <div class="meta">🌸 Special Navaratri darshan timings inside…</div></div>
+            <span class="meta">2h</span></div></div>
+          <div class="card"><div class="row"><div class="thumb">🧘</div>
+            <div style="flex:1"><div class="title">Swami Anand</div>
+              <div class="meta">Reminder: Satsang starts in 30 min 🙏</div></div>
+            <span class="meta">5h</span></div></div>
+          <div class="card"><div class="row"><div class="thumb">👥</div>
+            <div style="flex:1"><div class="title">Bhakti Mandali (Group)</div>
+              <div class="meta">New bhajan audio shared</div></div>
+            <span class="meta">1d</span></div></div>
+          <div class="card"><div class="row"><div class="thumb" style="background:var(--green)">✓</div>
+            <div style="flex:1"><div class="title">Payment receipt</div>
+              <div class="meta">Satyanarayan Puja · ₹252 · GST invoice</div></div>
+            <span class="meta">1d</span></div></div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="ic">🏠</span>Home</div>
+          <div class="tab"><span class="ic">🪔</span>Rituals</div>
+          <div class="tab"><span class="ic">📅</span>Events</div>
+          <div class="tab on"><span class="ic">🔔</span>Inbox</div>
+          <div class="tab"><span class="ic">👤</span>Profile</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. SUBSCRIBE / PAYMENT -->
+  <div class="screen">
+    <p class="cap">10 · Subscribe / Payment</p>
+    <p class="sub">tiers + Razorpay checkout</p>
+    <div class="phone"><div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="body"><div class="pad" style="overflow:auto;height:100%">
+        <div class="row"><span style="font-size:14px">‹</span><h2 class="s" style="margin:0">Subscribe</h2></div>
+        <p class="small">Support Sri Venkateswara Temple &amp; unlock subscriber events.</p>
+        <div class="tierbox">
+          <div class="row" style="justify-content:space-between"><b style="font-size:12px">Monthly</b><span class="price">₹199</span></div>
+          <p class="small">All subscriber-only satsangs &amp; discourses</p>
+        </div>
+        <div class="tierbox sel">
+          <div class="row" style="justify-content:space-between"><b style="font-size:12px">Yearly <span class="badge">Save 30%</span></b><span class="price">₹1,699</span></div>
+          <p class="small">Everything monthly + priority ritual booking</p>
+        </div>
+        <div class="sectionhdr"><b>Pay using</b></div>
+        <div class="listitem"><span>🟣 UPI (GPay / PhonePe / Paytm)</span><span>›</span></div>
+        <div class="listitem"><span>💳 Credit / Debit card</span><span>›</span></div>
+        <div class="listitem"><span>🏦 Netbanking / Wallet</span><span>›</span></div>
+        <div class="btn green" style="margin-top:14px">Subscribe — ₹1,699 / year</div>
+        <p class="small" style="text-align:center;margin-top:6px">Auto-renews yearly · cancel anytime · Razorpay secure</p>
+      </div></div>
+    </div>
+  </div>
+
+</div>
+<footer class="page">
+  <b>How to view:</b> open this file in any browser. &nbsp; <b>Coverage:</b> Register · Login/OTP · Home dashboard · Rituals icon grid · Ritual booking &amp; sankalpa · Live group meeting · Host profile · Inbox/broadcasts · Subscribe/payment.
+  These wireframes map to requirements FR-1…FR-36 in <code>docs/REQUIREMENTS.md</code>.
+</footer>
+</body>
+</html>

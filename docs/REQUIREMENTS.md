@@ -1,0 +1,144 @@
+# Requirements — Clique
+
+**Product:** A meeting and community app for Hindu devotees in India. Temples, devotee groups, and Gurus/Swamijis host live audio/video gatherings, conduct virtual rituals, run recurring occasions, share information, and broadcast group-level messages. Participants pay for access.
+
+**Last updated:** 2026-06-22 · **Phase:** Requirements
+
+> **Engagement model.** The client is **non-technical** and supplies **user/business requirements only**. All technical decisions — stack, architecture, infrastructure, tooling — are owned and recommended by the engineering side. On this project, the AI assistant acts as both **full-stack engineer** (mobile, backend, infra, payments, media) and **functional domain expert** (Hindu devotional practices, temple/Guru/group workflows, India market & compliance), translating plain-language requirements into a working product. Requirements in this doc are written in client-facing, non-technical language; the "how" lives in [ARCHITECTURE.md](ARCHITECTURE.md).
+
+---
+
+## 1. Goals & non-goals
+
+### Goals
+- Let devotees discover and follow temples, groups, and Gurus, and join their live events.
+- Provide reliable, large-audience audio/video gatherings (satsang, pravachan, bhajan, darshan, Q&A).
+- Offer guided, interactive **virtual rituals** (puja/aarti/havan) with sankalpa, offerings, and prasad/blessing follow-up.
+- Give hosts tools to schedule recurring occasions, share media/announcements, and broadcast group-level messages.
+- Monetize via **subscriptions**, **pay-per-event/ritual**, and **platform commission** on host earnings, using India-native payments (Razorpay).
+- Be mobile-first for India (Android + iOS), resilient on low-bandwidth networks and regional languages.
+
+### Non-goals (initial release)
+- Physical goods fulfilment/logistics (physical prasad shipping is a later phase; digital blessings only at launch).
+- Full social network features (timelines, DMs between arbitrary users) beyond host→follower communication.
+- E-commerce storefront / temple merchandise (future).
+- Astrology/horoscope services (future, separate module).
+
+---
+
+## 2. Personas & roles
+
+| Role | Description | Key abilities |
+| --- | --- | --- |
+| **Devotee (Participant)** | End user / follower | Discover, follow, subscribe, pay, join events, participate in rituals, receive broadcasts |
+| **Host – Temple** | Organization account | Create occasions/rituals, host live rooms, broadcast, manage subscribers, view payouts |
+| **Host – Group** | Community account | Same as Temple, scoped to a devotee community |
+| **Host – Guru/Swamiji** | Individual teacher | Same as Temple, plus personal following; can grant co-host roles |
+| **Disciple / Sevak (Co-host/Moderator)** | Delegated by a Guru/temple | Co-host rooms, moderate participants, manage event logistics |
+| **Platform Admin** | Clique operator | KYC/verification, content moderation, commission config, payouts, dispute handling, analytics |
+
+Access is **role-based (RBAC)**. A single user may hold multiple roles (e.g. a devotee who is also a sevak for one temple).
+
+---
+
+## 3. Functional requirements
+
+### 3.1 Accounts, onboarding & identity
+- **FR-1** Users sign up / sign in via mobile number (OTP) as primary, with email as optional secondary.
+- **FR-2** Profile: name, photo, preferred language, location (state/city), followed hosts.
+- **FR-3** Host onboarding is a **verification flow**: organization/individual details, KYC documents, bank/UPI for payouts. Hosts are not publicly listed until admin-approved.
+- **FR-4** A user can request to become a host; a Guru can invite disciples/sevaks as co-hosts with scoped permissions.
+- **FR-5** Account languages: UI launches in **English, Hindi, and Telugu**, with an i18n framework ready for more Indian languages (Tamil, Kannada, Marathi, Bengali, Gujarati) in later phases.
+
+### 3.2 Discovery & following
+- **FR-6** Browse/search temples, groups, and Gurus by name, tradition/sampradaya, deity, language, and location.
+- **FR-7** Follow a host to receive its occasions and broadcasts; following is free.
+- **FR-8** Host profile page: about, upcoming occasions, past recordings (if published), subscription tiers, reviews/ratings (later phase).
+
+### 3.3 Occasions & scheduling
+- **FR-9** Hosts create **occasions** (events): title, type (satsang/pravachan/bhajan/darshan/ritual/custom), description, language, start time, duration, recurrence (one-off, daily, weekly, festival calendar), cover media.
+- **FR-10** Occasions can be **free**, **subscriber-only**, or **pay-per-event** (price set by host).
+- **FR-11** Capacity & format per occasion: interactive (limited speakers) vs. broadcast/webinar (large audience, host-only audio/video with participant reactions/chat).
+- **FR-12** Devotees can RSVP, add to calendar, and receive reminders (push + in-app) before start.
+- **FR-13** Recurring occasions auto-generate upcoming instances; hosts can cancel/reschedule individual instances with attendee notification.
+- **FR-14** Hindu festival calendar awareness: hosts can attach occasions to known festivals (Diwali, Navaratri, Janmashtami, etc.). (Calendar data sourced/configurable.)
+
+### 3.4 Live audio/video gatherings
+- **FR-15** Live **rooms** support host audio + video and many participants, with two modes: (a) interactive (raise hand → speak), (b) broadcast/webinar (large scale, host-only media).
+- **FR-16** In-room features: text chat, emoji/reaction "offerings" (flowers/diya), raise hand, mute/remove participant (host/co-host), pin host video.
+- **FR-17** Co-hosts (sevaks) can moderate: admit/remove, mute, promote a participant to speaker.
+- **FR-18** Adaptive quality for low bandwidth (audio-only fallback); join via mobile data should be viable.
+- **FR-19** Optional session **recording**; host chooses whether to publish a replay (subject to access rules).
+- **FR-20** Attendance is gated by access rules (free / subscriber / paid ticket) and verified at join.
+
+### 3.5 Virtual rituals
+- **FR-21** A ritual is a structured occasion with steps/stages (e.g. sankalpa → invocation → offerings → aarti → prasad/blessing).
+- **FR-22** Participants submit **sankalpa** details (name, gotra, location, intention) when booking a ritual.
+- **FR-23** Participants can make **offerings** during the ritual (digital flowers/diya/items), some free, some paid add-ons.
+- **FR-24** After the ritual, participants receive a digital **prasad/blessing** (image/audio/video/certificate); physical fulfilment is a later phase.
+- **FR-25** Group rituals (many participants in one ceremony) and personal/dedicated rituals (host performs for one devotee/family) are both supported.
+
+### 3.6 Communication & broadcasts
+- **FR-26** Hosts broadcast **group-level messages/announcements** (text + media) to all followers or a subscriber segment; delivered via push + in-app inbox.
+- **FR-27** Information sharing: hosts post updates, images, audio (bhajans), and documents to their profile feed.
+- **FR-28** In-event chat is moderated; hosts/co-hosts can pin messages and disable chat.
+- **FR-29** Notification preferences are user-configurable per host and per category (occasion reminders, broadcasts, payment receipts).
+
+### 3.7 Payments & monetization
+- **FR-30** Payments via **Razorpay**: UPI, cards, netbanking, wallets. Support recurring mandates for subscriptions.
+- **FR-31** **Subscriptions** — hosts define tiers (monthly/yearly, price, benefits). Devotees subscribe, renew, and cancel; access updates accordingly.
+- **FR-32** **Pay-per-event / ritual** — one-time checkout grants access to a specific occasion/ritual (and optional paid offerings).
+- **FR-33** **Platform commission** — Clique retains a configurable percentage of host earnings; remainder is paid out to hosts (Razorpay Route/transfers).
+- **FR-34** Payouts: hosts see earnings, commission, and settlement status; payouts run on a schedule after KYC verification.
+- **FR-35** Receipts/invoices issued to payers; **GST** handling and tax invoices per Indian regulations.
+- **FR-36** Refund/cancellation policy enforced (e.g. cancelled event auto-refund); admin can issue manual refunds.
+- **FR-37** (Future) Voluntary **seva/donation** offerings to a host, with optional anonymity.
+
+### 3.8 Admin & moderation
+- **FR-38** Admin console: review/approve host KYC, configure commission rates, manage festival calendar, view platform analytics.
+- **FR-39** Content & conduct moderation: report users/messages/events, suspend accounts, take down content.
+- **FR-40** Dispute/refund handling and audit log of administrative actions.
+
+---
+
+## 4. Non-functional requirements
+
+| Area | Requirement |
+| --- | --- |
+| **NFR-1 Scale** | Support large broadcast events (target 10k+ concurrent viewers per event; interactive rooms in the hundreds). Architecture must scale media horizontally. |
+| **NFR-2 Performance** | App cold start < 3s on mid-range Android; join-to-live < 5s; chat/reaction latency < 1s. |
+| **NFR-3 Low bandwidth** | Usable on 3G/poor 4G; audio-only fallback; offline access to downloaded recordings/announcements where permitted. |
+| **NFR-4 Availability** | 99.9% target for core services; graceful degradation of live media. |
+| **NFR-5 Security** | OTP auth, encrypted transport (TLS), encryption at rest for PII/KYC, RBAC, rate limiting, secure media tokens for room access. |
+| **NFR-6 Privacy & compliance** | India **DPDP Act** compliance; consent for recordings; data residency in India; PCI-DSS handled by Razorpay (no raw card data stored); **GST** invoicing; RBI rules for payouts/marketplaces. |
+| **NFR-7 Localization** | Full i18n; right rendering of Indian scripts; date/time in IST; festival calendar localization. |
+| **NFR-8 Accessibility** | Readable fonts/scaling, captions for recorded discourses (later), high-contrast mode. |
+| **NFR-9 Observability** | Centralized logging, metrics, crash reporting, payment/payout audit trails. |
+| **NFR-10 Cost** | Media (egress/minutes) is the dominant cost; design must allow audio-only and recording controls to manage spend. |
+
+---
+
+## 5. Key user stories (MVP-relevant)
+
+- As a **devotee**, I can find a Guru by language and follow them so I get notified of their satsangs.
+- As a **devotee**, I can pay once to join a special Navaratri puja and submit my sankalpa details.
+- As a **devotee**, I can subscribe to a temple monthly to access all subscriber-only discourses.
+- As a **Guru**, I can schedule a weekly recurring satsang and broadcast a reminder to all followers.
+- As a **temple**, I can run a virtual aarti where 2,000 devotees watch live and offer digital diyas.
+- As a **sevak**, I can co-host and mute disruptive participants during a live event.
+- As a **host**, I can see my earnings, the platform commission deducted, and my next payout date.
+- As an **admin**, I can verify a new temple's KYC before it goes live and set its commission rate.
+
+---
+
+## 6. Open questions / assumptions
+
+> These are working assumptions; confirm with the client and update this section.
+
+1. **Donations/seva** were not selected as a launch revenue stream — captured as FR-37 (future). Confirm whether v1 needs basic donations.
+2. **Recording storage & retention** policy (how long replays are kept, who pays for storage) — TBD.
+3. **Concurrency targets** (NFR-1) are estimates — confirm expected peak event size to size the media tier.
+4. **Languages for v1** — confirmed: **English, Hindi, Telugu** at launch. Additional regional languages are a later phase.
+5. **Physical prasad fulfilment** — deferred; confirm if any v1 host requires it.
+6. **Multi-tenant branding** — do large temples need white-label/branded presence? Affects architecture.
+7. **App-store policy** — selling digital event access may trigger Apple/Google in-app-purchase rules; confirm whether Razorpay-only checkout is acceptable for the categories sold (see ARCHITECTURE risks).
