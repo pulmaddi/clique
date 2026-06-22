@@ -20,14 +20,11 @@ No build, no server, no secrets — it's all static files.
 ## One-time setup
 
 ### 1. Put the project on GitHub
+The repo is already initialized with a first commit. Just create an **empty** repo on github.com (e.g. `clique-preview`, no README), then:
 ```bash
 cd c:/projects/clique
-git init
-git add .
-git commit -m "Bhakti Setu: requirements, wireframes, and Render preview site"
-# create an EMPTY repo on github.com first (e.g. clique-preview), then:
-git remote add origin https://github.com/<your-username>/<your-repo>.git
 git branch -M main
+git remote add origin https://github.com/<your-username>/<your-repo>.git
 git push -u origin main
 ```
 
