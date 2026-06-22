@@ -31,6 +31,7 @@ Mobile-first (Android + iOS) on **React Native (Expo)**, a **Node.js/TypeScript 
 | --- | --- |
 | [index.html](index.html) | Public **hero / landing page** (logo, goal, Register Now, Terms) |
 | [preview.html](preview.html) | Client review portal (links wireframes + all docs) |
+| [register.html](register.html) | Sign-up landing — accept T&C to enable Register Now |
 | [terms.html](terms.html) | Terms & Conditions (draft; payment terms TBD) |
 | [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md) | Functional and non-functional requirements, roles, user stories |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design, tech stack, data model, integrations |
