@@ -1,0 +1,42 @@
+# Local dev infrastructure for Bhakti Setu.
+# Usage: pnpm infra:up   (from repo root)  /  docker compose -f infra/docker-compose.yml up -d
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: bhakti-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bhakti
+      POSTGRES_PASSWORD: bhakti
+      POSTGRES_DB: bhakti_setu
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bhakti"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: bhakti-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  livekit:
+    image: livekit/livekit-server:latest
+    container_name: bhakti-livekit
+    restart: unless-stopped
+    command: --config /etc/livekit.yaml
+    ports:
+      - "7880:7880"     # WS / API
+      - "7881:7881"     # TCP fallback
+      - "7882:7882/udp" # RTC
+    volumes:
+      - ./livekit.yaml:/etc/livekit.yaml:ro
+
+volumes:
+  pgdata:

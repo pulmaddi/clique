@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "Bhakti Setu",
+    "slug": "bhakti-setu",
+    "scheme": "bhaktisetu",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#7A1F2B"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bhaktisetu.app"
+    },
+    "android": {
+      "package": "com.bhaktisetu.app"
+    },
+    "extra": {
+      "apiBaseUrl": "http://localhost:3000/api/v1"
+    },
+    "plugins": ["expo-localization"]
+  }
+}

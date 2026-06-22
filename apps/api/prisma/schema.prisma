@@ -1,0 +1,318 @@
+// Bhakti Setu data model. Mirrors packages/shared enums & types.
+// Money fields are integers in paise (minor units) — never floats.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  DEVOTEE
+  HOST_OWNER
+  CO_HOST
+  ADMIN
+}
+
+enum HostType {
+  TEMPLE
+  GROUP
+  GURU
+}
+
+enum HostVerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum OccasionType {
+  SATSANG
+  PRAVACHAN
+  BHAJAN
+  DARSHAN
+  RITUAL
+  CUSTOM
+}
+
+enum OccasionFormat {
+  INTERACTIVE
+  BROADCAST
+}
+
+enum AccessType {
+  FREE
+  SUBSCRIBER
+  PAID
+}
+
+enum RecurrenceType {
+  ONE_OFF
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  CREATED
+  AUTHORIZED
+  CAPTURED
+  FAILED
+  REFUNDED
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+  EXPIRED
+}
+
+enum PayoutStatus {
+  PENDING
+  PROCESSING
+  PAID
+  FAILED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  phone     String   @unique
+  email     String?  @unique
+  name      String
+  photoUrl  String?
+  language  String   @default("en")
+  city      String?
+  state     String?
+  roles     UserRole[] @default([DEVOTEE])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  memberships   HostMember[]
+  follows       Follow[]
+  bookings      Booking[]
+  subscriptions Subscription[]
+  payments      Payment[]
+  notifications Notification[]
+}
+
+model Host {
+  id                 String   @id @default(uuid())
+  type               HostType
+  name               String
+  about              String?
+  avatarUrl          String?
+  language           String   @default("en")
+  city               String?
+  state              String?
+  tradition          String?
+  deity              String?
+  verificationStatus HostVerificationStatus @default(PENDING)
+  commissionPercent  Int      @default(15)
+  payoutAccountRef   String?  // Razorpay linked-account / fund-account id
+  followerCount      Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  members       HostMember[]
+  follows       Follow[]
+  occasions     Occasion[]
+  tiers         SubscriptionTier[]
+  subscriptions Subscription[]
+  ledgerEntries LedgerEntry[]
+  payouts       Payout[]
+  broadcasts    Broadcast[]
+}
+
+model HostMember {
+  id     String   @id @default(uuid())
+  host   Host     @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  hostId String
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  role   UserRole @default(CO_HOST)
+
+  @@unique([hostId, userId])
+}
+
+model Follow {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  host      Host     @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  hostId    String
+  createdAt DateTime @default(now())
+
+  @@unique([userId, hostId])
+}
+
+model Occasion {
+  id              String         @id @default(uuid())
+  host            Host           @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  hostId          String
+  type            OccasionType
+  title           String
+  description     String?
+  language        String         @default("en")
+  format          OccasionFormat @default(BROADCAST)
+  access          AccessType     @default(FREE)
+  pricePaise      Int?
+  recurrence      RecurrenceType @default(ONE_OFF)
+  startsAt        DateTime
+  durationMinutes Int            @default(60)
+  festivalTag     String?
+  coverUrl        String?
+  // Ritual-specific (null for non-ritual occasions)
+  ritualSteps     Json?
+  ritualOfferings Json?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  instances OccasionInstance[]
+}
+
+model OccasionInstance {
+  id           String   @id @default(uuid())
+  occasion     Occasion @relation(fields: [occasionId], references: [id], onDelete: Cascade)
+  occasionId   String
+  startsAt     DateTime
+  endsAt       DateTime
+  roomName     String?  @unique
+  recordingUrl String?
+
+  bookings Booking[]
+
+  @@index([startsAt])
+}
+
+model Booking {
+  id                 String           @id @default(uuid())
+  user               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId             String
+  instance           OccasionInstance @relation(fields: [occasionInstanceId], references: [id], onDelete: Cascade)
+  occasionInstanceId String
+  status             BookingStatus    @default(PENDING)
+  sankalpa           Json?
+  offeringIds        String[]         @default([])
+  payment            Payment?         @relation(fields: [paymentId], references: [id])
+  paymentId          String?
+  createdAt          DateTime         @default(now())
+
+  @@unique([userId, occasionInstanceId])
+}
+
+model SubscriptionTier {
+  id         String   @id @default(uuid())
+  host       Host     @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  hostId     String
+  name       String
+  pricePaise Int
+  interval   String   @default("monthly") // monthly | yearly
+  benefits   String[] @default([])
+
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id                   String             @id @default(uuid())
+  user                 User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String
+  host                 Host               @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  hostId               String
+  tier                 SubscriptionTier   @relation(fields: [tierId], references: [id])
+  tierId               String
+  status               SubscriptionStatus @default(ACTIVE)
+  razorpaySubscriptionId String?
+  currentPeriodEnd     DateTime
+  createdAt            DateTime           @default(now())
+
+  @@unique([userId, hostId])
+}
+
+model Payment {
+  id                String        @id @default(uuid())
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String
+  amountPaise       Int
+  gstPaise          Int           @default(0)
+  currency          String        @default("INR")
+  status            PaymentStatus @default(CREATED)
+  razorpayOrderId   String?       @unique
+  razorpayPaymentId String?       @unique
+  idempotencyKey    String        @unique
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  bookings Booking[]
+  ledger   LedgerEntry?
+}
+
+model LedgerEntry {
+  id             String   @id @default(uuid())
+  payment        Payment  @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  paymentId      String   @unique
+  host           Host     @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  hostId         String
+  grossPaise     Int
+  commissionPaise Int
+  hostNetPaise   Int
+  createdAt      DateTime @default(now())
+}
+
+model Payout {
+  id           String       @id @default(uuid())
+  host         Host         @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  hostId       String
+  amountPaise  Int
+  status       PayoutStatus @default(PENDING)
+  scheduledFor DateTime
+  processedAt  DateTime?
+  createdAt    DateTime     @default(now())
+}
+
+model Broadcast {
+  id       String   @id @default(uuid())
+  host     Host     @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  hostId   String
+  title    String
+  body     String
+  mediaUrl String?
+  segment  String   @default("ALL") // ALL | SUBSCRIBERS
+  sentAt   DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  title     String
+  body      String
+  category  String   @default("GENERAL") // OCCASION | BROADCAST | PAYMENT | GENERAL
+  readAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([userId, readAt])
+}
+
+// Short-lived OTP store (alternatively kept in Redis with TTL).
+model OtpCode {
+  id        String   @id @default(uuid())
+  phone     String
+  codeHash  String
+  expiresAt DateTime
+  consumed  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([phone])
+}

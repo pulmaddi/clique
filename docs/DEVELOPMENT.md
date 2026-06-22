@@ -1,0 +1,72 @@
+# Development guide — Bhakti Setu
+
+This is the engineering setup for the **app** (mobile + API). The static preview
+site (root `index.html`, `view.html`, `docs/`) is separate and deploys to Render
+per [DEPLOY.md](DEPLOY.md).
+
+## Monorepo layout
+```
+apps/
+  api/        NestJS + Prisma backend
+  mobile/     Expo (React Native) app
+packages/
+  shared/     shared TS types, enums, zod schemas, money helpers
+infra/        docker-compose (Postgres, Redis, LiveKit), configs
+```
+Workspaces are managed with **pnpm** + **Turborepo**.
+
+## Prerequisites
+- Node 20 (`.nvmrc`), pnpm 9 (`corepack enable`)
+- Docker Desktop (for Postgres/Redis/LiveKit)
+- For mobile: Expo Go app on a device, or Android Studio / Xcode
+
+## First-time setup
+```bash
+# 1. install all workspace deps
+pnpm install
+
+# 2. start infra (Postgres + Redis + LiveKit)
+pnpm infra:up
+
+# 3. configure env
+cp .env.example .env
+cp apps/api/.env.example apps/api/.env   # fill Razorpay test keys
+
+# 4. set up the database
+pnpm --filter @bhakti-setu/api prisma:generate
+pnpm --filter @bhakti-setu/api prisma:migrate   # creates tables
+
+# 5. build shared package (api/mobile import it)
+pnpm --filter @bhakti-setu/shared build
+```
+
+## Run
+```bash
+pnpm --filter @bhakti-setu/api dev      # API at http://localhost:3000/api/v1
+pnpm --filter @bhakti-setu/mobile dev   # Expo dev server
+```
+Health check: `GET http://localhost:3000/api/v1/health`.
+
+## What's implemented (scaffold level)
+- **Auth:** OTP request/verify (dev OTP is logged to the API console), JWT issue, register.
+- **Hosts:** discovery list, create (PENDING → admin approval), profile + occasions.
+- **Occasions:** create (+ first instance), upcoming feed, booking, access checks (free/subscriber/paid).
+- **Payments:** Razorpay order creation, signature-verified webhook, ledger split (gross/commission/host-net).
+- **Realtime:** LiveKit token issuance gated by access rules; Socket.IO gateway for chat/reactions/raise-hand.
+- **Notifications:** in-app inbox + broadcast fan-out to followers/subscribers.
+- **Admin:** host verification, commission config, platform metrics, role-guarded.
+- **Mobile:** Splash, Register, OTP, Home, Rituals, Ritual booking, Live meeting (UI shell), Host profile, Inbox, Subscribe — wired to the API client, themed per branding, i18n in en/hi/te.
+
+## Known TODOs (next vertical slices)
+- Wire `@livekit/react-native` into `LiveMeetingScreen` (currently a presentational shell).
+- SMS gateway for real OTP delivery (MSG91 / Gupshup).
+- Razorpay **Subscriptions** + **Route** payouts (only orders/webhooks scaffolded).
+- BullMQ workers for push delivery + recurring-occasion materialization.
+- Raw-body middleware for the Razorpay webhook signature (see comment in `payments.controller.ts`).
+- Auth on the WebSocket handshake.
+- Tests (Jest) — none yet.
+
+## Notes
+- **Money** is always integer **paise**; use helpers in `@bhakti-setu/shared` (`rupeesToPaise`, `splitEarnings`).
+- Dependency **versions** are pinned to sensible ranges; run `pnpm install` and, for mobile, `npx expo install --fix` to align native deps with the installed Expo SDK.
+- This is a **scaffold**: modules compile and express the architecture, but several flows are stubbed (marked with `TODO`). It is the skeleton for Phase 1 in [ROADMAP.md](ROADMAP.md), not a finished app.

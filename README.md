@@ -36,4 +36,5 @@ Mobile-first (Android + iOS) on **React Native (Expo)**, a **Node.js/TypeScript 
 | [docs/BRANDING.md](docs/BRANDING.md) | Devotional name options + visual identity |
 | [docs/wireframes/index.html](docs/wireframes/index.html) | Clickable wireframe gallery (open in a browser) |
 | [docs/DEPLOY.md](docs/DEPLOY.md) | How to deploy the preview portal to Render |
+| [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Engineering setup — run the monorepo (mobile + API) |
 | [CLAUDE.md](CLAUDE.md) | Context for AI-assisted development sessions |

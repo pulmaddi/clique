@@ -1,0 +1,12 @@
+# LiveKit dev config. DO NOT use these keys in production —
+# generate strong keys and inject via env/secrets manager.
+port: 7880
+rtc:
+  tcp_port: 7881
+  port_range_start: 50000
+  port_range_end: 50100
+  use_external_ip: false
+keys:
+  devkey: devsecret-change-me-32chars-minimum
+logging:
+  level: info

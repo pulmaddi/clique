@@ -1,0 +1,27 @@
+{
+  "name": "bhakti-setu",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Meeting & virtual-ritual app for Hindu devotees in India",
+  "packageManager": "pnpm@9.7.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "api": "pnpm --filter @bhakti-setu/api",
+    "mobile": "pnpm --filter @bhakti-setu/mobile",
+    "shared": "pnpm --filter @bhakti-setu/shared",
+    "infra:up": "docker compose -f infra/docker-compose.yml up -d",
+    "infra:down": "docker compose -f infra/docker-compose.yml down"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.5.0",
+    "prettier": "^3.3.0"
+  }
+}
