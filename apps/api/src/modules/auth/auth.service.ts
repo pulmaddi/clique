@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { createHash, randomInt } from 'node:crypto';
 import { PrismaService } from '../../prisma/prisma.service';
-import type { RegisterDto } from '@bhakti-setu/shared';
+import type { RegisterDto } from '@clique/shared';
 
 @Injectable()
 export class AuthService {

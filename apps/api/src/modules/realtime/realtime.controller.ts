@@ -9,7 +9,7 @@ import {
   OccasionFormat,
   type JoinRoomDto,
   type RoomAccessToken,
-} from '@bhakti-setu/shared';
+} from '@clique/shared';
 import type { AuthPayload } from '../auth/jwt-auth.guard';
 
 @Controller('rooms')

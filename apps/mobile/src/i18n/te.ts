@@ -1,6 +1,6 @@
 export default {
-  appName: 'భక్తి సేతు',
-  tagline: 'భక్తి వారధి',
+  appName: 'ఇష్ట',
+  tagline: 'మీ ఇష్ట దైవం, ఎల్లప్పుడూ మీతో',
   namaste: 'నమస్తే',
   welcome: {
     purpose:

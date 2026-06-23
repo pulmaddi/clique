@@ -7,7 +7,7 @@ import {
   type RegisterDto,
   type RequestOtpDto,
   type VerifyOtpDto,
-} from '@bhakti-setu/shared';
+} from '@clique/shared';
 import { ZodValidate } from '../../common/zod-validate.decorator';
 
 @Controller('auth')

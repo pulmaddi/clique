@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from './roles.decorator';
-import type { UserRole } from '@bhakti-setu/shared';
+import type { UserRole } from '@clique/shared';
 import type { AuthPayload } from '../modules/auth/jwt-auth.guard';
 
 /** Checks the authenticated user's roles against @Roles() metadata. */

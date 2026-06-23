@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Bhakti Setu",
-    "slug": "bhakti-setu",
-    "scheme": "bhaktisetu",
+    "name": "Ishta",
+    "slug": "ishta",
+    "scheme": "ishta",
     "version": "0.1.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -12,10 +12,10 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bhaktisetu.app"
+      "bundleIdentifier": "com.ishta.app"
     },
     "android": {
-      "package": "com.bhaktisetu.app"
+      "package": "com.ishta.app"
     },
     "extra": {
       "apiBaseUrl": "http://localhost:3000/api/v1"

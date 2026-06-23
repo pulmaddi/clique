@@ -15,7 +15,7 @@ import {
   createOccasionSchema,
   type CreateBookingDto,
   type CreateOccasionDto,
-} from '@bhakti-setu/shared';
+} from '@clique/shared';
 import type { AuthPayload } from '../auth/jwt-auth.guard';
 
 @Controller('occasions')

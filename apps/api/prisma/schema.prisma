@@ -1,4 +1,4 @@
-// Bhakti Setu data model. Mirrors packages/shared enums & types.
+// Clique data model. Mirrors packages/shared enums & types.
 // Money fields are integers in paise (minor units) — never floats.
 
 generator client {

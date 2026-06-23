@@ -1,5 +1,5 @@
 {
-  "name": "bhakti-setu",
+  "name": "clique",
   "version": "0.1.0",
   "private": true,
   "description": "Meeting & virtual-ritual app for Hindu devotees in India",
@@ -13,9 +13,9 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
-    "api": "pnpm --filter @bhakti-setu/api",
-    "mobile": "pnpm --filter @bhakti-setu/mobile",
-    "shared": "pnpm --filter @bhakti-setu/shared",
+    "api": "pnpm --filter @clique/api",
+    "mobile": "pnpm --filter @clique/mobile",
+    "shared": "pnpm --filter @clique/shared",
     "infra:up": "docker compose -f infra/docker-compose.yml up -d",
     "infra:down": "docker compose -f infra/docker-compose.yml down"
   },

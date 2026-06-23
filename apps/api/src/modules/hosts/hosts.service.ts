@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { DEFAULT_PLATFORM_COMMISSION_PERCENT } from '@bhakti-setu/shared';
-import type { CreateHostDto } from '@bhakti-setu/shared';
+import { DEFAULT_PLATFORM_COMMISSION_PERCENT } from '@clique/shared';
+import type { CreateHostDto } from '@clique/shared';
 
 @Injectable()
 export class HostsService {

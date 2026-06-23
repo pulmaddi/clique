@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { HostVerificationStatus } from '@bhakti-setu/shared';
+import { HostVerificationStatus } from '@clique/shared';
 
 @Injectable()
 export class AdminService {

@@ -1,6 +1,6 @@
 export default {
-  appName: 'Bhakti Setu',
-  tagline: 'Bridge of devotion',
+  appName: 'Ishta',
+  tagline: 'Your cherished deity, always near',
   namaste: 'Namaste',
   welcome: {
     purpose:

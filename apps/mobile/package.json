@@ -1,5 +1,5 @@
 {
-  "name": "@bhakti-setu/mobile",
+  "name": "@clique/mobile",
   "version": "0.1.0",
   "private": true,
   "main": "index.ts",
@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@bhakti-setu/shared": "workspace:*",
+    "@clique/shared": "workspace:*",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "@react-navigation/bottom-tabs": "^6.5.20",

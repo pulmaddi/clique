@@ -1,4 +1,4 @@
-# Development guide — Bhakti Setu
+# Development guide — Clique platform
 
 This is the engineering setup for the **app** (mobile + API). The static preview
 site (root `index.html`, `view.html`, `docs/`) is separate and deploys to Render
@@ -33,28 +33,28 @@ cp .env.example .env
 cp apps/api/.env.example apps/api/.env   # fill Razorpay test keys
 
 # 4. set up the database
-pnpm --filter @bhakti-setu/api prisma:generate
-pnpm --filter @bhakti-setu/api prisma:migrate   # creates tables
+pnpm --filter @clique/api prisma:generate
+pnpm --filter @clique/api prisma:migrate   # creates tables
 
 # 5. build shared package (api/mobile import it)
-pnpm --filter @bhakti-setu/shared build
+pnpm --filter @clique/shared build
 ```
 
 ## Run
 ```bash
-pnpm --filter @bhakti-setu/shared build   # build shared first (apps import its dist)
-pnpm --filter @bhakti-setu/api dev         # API at http://localhost:3000/api/v1
-pnpm --filter @bhakti-setu/mobile dev      # Expo dev server (press a=Android, i=iOS)
+pnpm --filter @clique/shared build   # build shared first (apps import its dist)
+pnpm --filter @clique/api dev         # API at http://localhost:3000/api/v1
+pnpm --filter @clique/mobile dev      # Expo dev server (press a=Android, i=iOS)
 ```
 Health check: `GET http://localhost:3000/api/v1/health`.
 
 ### Running the mobile app
-- Install **Expo Go** on your phone, run `pnpm --filter @bhakti-setu/mobile dev`, and scan the QR code (phone + PC on the same Wi-Fi). Or press `a` (Android emulator) / `i` (iOS simulator).
+- Install **Expo Go** on your phone, run `pnpm --filter @clique/mobile dev`, and scan the QR code (phone + PC on the same Wi-Fi). Or press `a` (Android emulator) / `i` (iOS simulator).
 - The app launches **Splash → Welcome (logo, purpose, accept Terms, Register Now) → Register (OTP) → Home tabs**.
 - The mobile app talks to the API via `extra.apiBaseUrl` in `app.json` (default `http://localhost:3000/api/v1`). On a physical device, change `localhost` to your PC's LAN IP.
 
 ### Monorepo notes (important)
-- `@bhakti-setu/shared` is consumed as **built JS** (`dist/`), so run its `build` once (and after changing it). `turbo dev`/`turbo build` do this automatically via `dependsOn: ["^build"]`.
+- `@clique/shared` is consumed as **built JS** (`dist/`), so run its `build` once (and after changing it). `turbo dev`/`turbo build` do this automatically via `dependsOn: ["^build"]`.
 - `apps/mobile/metro.config.js` makes Metro resolve the workspace root + shared package under pnpm — don't delete it.
 
 ## What's implemented (scaffold level)
@@ -77,6 +77,6 @@ Health check: `GET http://localhost:3000/api/v1/health`.
 - Tests (Jest) — none yet.
 
 ## Notes
-- **Money** is always integer **paise**; use helpers in `@bhakti-setu/shared` (`rupeesToPaise`, `splitEarnings`).
+- **Money** is always integer **paise**; use helpers in `@clique/shared` (`rupeesToPaise`, `splitEarnings`).
 - Dependency **versions** are pinned to sensible ranges; run `pnpm install` and, for mobile, `npx expo install --fix` to align native deps with the installed Expo SDK.
 - This is a **scaffold**: modules compile and express the architecture, but several flows are stubbed (marked with `TODO`). It is the skeleton for Phase 1 in [ROADMAP.md](ROADMAP.md), not a finished app.

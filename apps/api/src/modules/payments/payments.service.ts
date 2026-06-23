@@ -2,7 +2,7 @@ import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { RazorpayService } from './razorpay.service';
-import { splitEarnings } from '@bhakti-setu/shared';
+import { splitEarnings } from '@clique/shared';
 
 @Injectable()
 export class PaymentsService {

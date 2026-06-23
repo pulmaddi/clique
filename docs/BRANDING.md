@@ -1,22 +1,23 @@
-# Branding & Naming — Clique
+# Branding & Naming
 
-> Working repo name is **Clique**. Below are devotional product-name options for the client to choose from. Each is a common Sanskrit/Hindi/Telugu devotional word — **check trademark/app-store/domain availability in India before finalizing.**
+## Names in use
 
-## Name options
+- **Platform / project: `Clique`** — the reusable meeting/community platform. This is the **codebase identity**: the repo, the package scope (`@clique/*`), infra resources, and backend services all use it. Future "advanced meeting apps" are built on the same Clique platform.
+- **App brand: `Ishta`** — the **virtual-ritual app** built on Clique, and the name end users see. From *Ishta Devata* (इष्ट देवता / ఇష్ట దైవం) — one's cherished/chosen personal deity: an apt, warm, pan-India devotional name. Applied as **branding only** (display name, logo, splash, store listing, landing pages); the underlying platform stays brand-neutral so it can be re-skinned for other apps.
 
-| Name | Meaning / feel | Notes |
-| --- | --- | --- |
-| **Bhakti Setu** | "Bridge of devotion" — connects devotees to temples/Gurus | Clear, warm, pan-India |
-| **Divya Darshan** | "Divine viewing/audience" — fits live darshan & rituals | Strong fit for the live-event core |
-| **Satsang** | "Company of truth/togetherness" — gathering of devotees | Matches the meeting concept; very generic, check availability |
-| **Aaradhana** | "Worship / adoration" | Pan-India, easy to say in Telugu & Hindi |
-| **Devalaya** | "Abode of the divine / temple" | Temple-forward branding |
-| **Punya Sangam** | "Confluence of merit/virtue" | Community + ritual connotation |
-| **Guru Vandana** | "Salutation to the Guru" | Leans Guru/Swamiji-centric |
-| **SevaDhara** | "Stream of service/seva" | Good if donations/seva grow later |
+> The platform owns the architecture; **Ishta** is the current app skin (logo + this version). Other apps reuse the same Clique code with different logos/branding.
 
-### Shortlist recommendation
-- **Bhakti Setu** or **Divya Darshan** balance meaning, memorability, and breadth (temples + Gurus + groups) without leaning too far toward one host type.
+**Before launch:** verify "Ishta" trademark / Play Store / App Store / domain availability in India.
+
+## Other names considered (for reference)
+
+| Name | Meaning / feel |
+| --- | --- |
+| **Divya Darshan** | "Divine viewing/audience" — fits live darshan & rituals |
+| **Bhakti Setu** | "Bridge of devotion" (earlier working placeholder) |
+| **Aaradhana** | "Worship / adoration" |
+| **Devalaya** | "Abode of the divine / temple" |
+| **Guru Vandana** | "Salutation to the Guru" |
 
 ## Visual identity (proposed)
 - **Palette:** saffron / marigold (`#E8741E`), deep maroon (`#7A1F2B`), warm cream (`#FFF6EC`), tulsi green accent (`#2E7D4F`), gold highlights (`#C99A2E`).
@@ -24,4 +25,4 @@
 - **Iconography:** simple line icons with devotional motifs (diya, kalash, om, bell, lotus) — used as accents, not clutter.
 - **Type:** a humanist sans with good Devanagari + Telugu script coverage (e.g. Noto Sans / Noto Sans Devanagari / Noto Sans Telugu).
 
-> Final naming is a **client/business decision** (and a legal availability check). Wireframes use "Bhakti Setu" as a placeholder brand — swap freely.
+> The mobile app, landing pages and wireframes display the **Ishta** brand. The platform layer (packages, infra, backend) uses **Clique**.

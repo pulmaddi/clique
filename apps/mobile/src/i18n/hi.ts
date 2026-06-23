@@ -1,6 +1,6 @@
 export default {
-  appName: 'भक्ति सेतु',
-  tagline: 'भक्ति का सेतु',
+  appName: 'इष्ट',
+  tagline: 'आपके इष्ट, सदा आपके साथ',
   namaste: 'नमस्ते',
   welcome: {
     purpose:

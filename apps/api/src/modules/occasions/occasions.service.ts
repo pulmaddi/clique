@@ -5,8 +5,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { AccessType } from '@bhakti-setu/shared';
-import type { CreateBookingDto, CreateOccasionDto } from '@bhakti-setu/shared';
+import { AccessType } from '@clique/shared';
+import type { CreateBookingDto, CreateOccasionDto } from '@clique/shared';
 
 @Injectable()
 export class OccasionsService {

@@ -37,14 +37,14 @@ git push -u origin main
 **Option A — Blueprint (uses `render.yaml`, recommended):**
 1. Go to <https://dashboard.render.com> → **New** → **Blueprint**.
 2. Connect your GitHub account and pick this repo.
-3. Render reads `render.yaml`, shows the `bhakti-setu-preview` static site → **Apply**.
+3. Render reads `render.yaml`, shows the `ishta-preview` static site → **Apply**.
 
 **Option B — Manual static site:**
 1. **New** → **Static Site** → connect the repo.
 2. Settings: **Build Command** = *(leave empty)*, **Publish Directory** = `.`
 3. **Create Static Site**.
 
-In ~1 minute you get a URL like `https://bhakti-setu-preview.onrender.com`. Share that with the client.
+In ~1 minute you get a URL like `https://ishta-preview.onrender.com`. Share that with the client.
 
 ---
 

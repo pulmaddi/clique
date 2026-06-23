@@ -14,7 +14,7 @@ import { ZodValidate } from '../../common/zod-validate.decorator';
 import {
   createHostSchema,
   type CreateHostDto,
-} from '@bhakti-setu/shared';
+} from '@clique/shared';
 import type { AuthPayload } from '../auth/jwt-auth.guard';
 
 @Controller('hosts')

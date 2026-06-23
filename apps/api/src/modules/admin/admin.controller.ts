@@ -16,7 +16,7 @@ import {
   UserRole,
   createBroadcastSchema,
   type CreateBroadcastDto,
-} from '@bhakti-setu/shared';
+} from '@clique/shared';
 import { ZodValidate } from '../../common/zod-validate.decorator';
 
 @Controller('admin')

@@ -1,5 +1,5 @@
 // Metro config for a pnpm monorepo (Expo).
-// Lets Metro find the workspace root + the @bhakti-setu/shared package and
+// Lets Metro find the workspace root + the @clique/shared package and
 // resolve dependencies hoisted to the repo-root node_modules.
 // See: https://docs.expo.dev/guides/monorepos/
 const { getDefaultConfig } = require('expo/metro-config');

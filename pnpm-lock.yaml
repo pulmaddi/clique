@@ -20,7 +20,7 @@ importers:
 
   apps/api:
     dependencies:
-      '@bhakti-setu/shared':
+      '@clique/shared':
         specifier: workspace:*
         version: link:../../packages/shared
       '@nestjs/common':
@@ -108,7 +108,7 @@ importers:
 
   apps/mobile:
     dependencies:
-      '@bhakti-setu/shared':
+      '@clique/shared':
         specifier: workspace:*
         version: link:../../packages/shared
       '@livekit/react-native':

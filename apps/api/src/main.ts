@@ -11,7 +11,7 @@ async function bootstrap() {
   const port = process.env.PORT ? Number(process.env.PORT) : 3000;
   await app.listen(port);
   // eslint-disable-next-line no-console
-  console.log(`🪔 Bhakti Setu API running on http://localhost:${port}/api/v1`);
+  console.log(`🪔 Clique API running on http://localhost:${port}/api/v1`);
 }
 
 void bootstrap();

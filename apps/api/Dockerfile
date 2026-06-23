@@ -1,5 +1,5 @@
 # Build the NestJS API. Run from the repo root:
-#   docker build -f apps/api/Dockerfile -t bhakti-setu-api .
+#   docker build -f apps/api/Dockerfile -t clique-api .
 FROM node:20-alpine AS base
 RUN corepack enable
 WORKDIR /app
@@ -14,9 +14,9 @@ RUN pnpm install --frozen-lockfile || pnpm install
 # --- Build ---
 FROM deps AS build
 COPY . .
-RUN pnpm --filter @bhakti-setu/shared build \
- && pnpm --filter @bhakti-setu/api prisma:generate \
- && pnpm --filter @bhakti-setu/api build
+RUN pnpm --filter @clique/shared build \
+ && pnpm --filter @clique/api prisma:generate \
+ && pnpm --filter @clique/api build
 
 # --- Runtime ---
 FROM base AS runtime
