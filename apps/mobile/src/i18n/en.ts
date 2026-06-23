@@ -2,6 +2,18 @@ export default {
   appName: 'Bhakti Setu',
   tagline: 'Bridge of devotion',
   namaste: 'Namaste',
+  welcome: {
+    purpose:
+      'Join temples, Gurus & devotee groups for live darshan & satsang and guided virtual rituals — devotion, without distance.',
+    point1: 'Join live darshan, satsang & discourses',
+    point2: 'Perform guided virtual rituals (puja, havan, aarti)',
+    point3: 'Follow your temples & never miss an occasion',
+    accept: 'I have read and accept the',
+    terms: 'Terms & Conditions',
+    acceptHint: 'Please accept the Terms & Conditions to continue.',
+    registerNow: 'Register Now',
+    haveAccount: 'Already registered? Sign in',
+  },
   register: {
     title: 'Create your account',
     subtitle: 'Join temples, Gurus & devotee groups near you.',

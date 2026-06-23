@@ -1,5 +1,7 @@
 export type RootStackParamList = {
   Splash: undefined;
+  Welcome: undefined;
+  Terms: undefined;
   Register: undefined;
   OtpVerify: { phone: string };
   Main: undefined;

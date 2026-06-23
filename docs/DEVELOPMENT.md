@@ -42,10 +42,20 @@ pnpm --filter @bhakti-setu/shared build
 
 ## Run
 ```bash
-pnpm --filter @bhakti-setu/api dev      # API at http://localhost:3000/api/v1
-pnpm --filter @bhakti-setu/mobile dev   # Expo dev server
+pnpm --filter @bhakti-setu/shared build   # build shared first (apps import its dist)
+pnpm --filter @bhakti-setu/api dev         # API at http://localhost:3000/api/v1
+pnpm --filter @bhakti-setu/mobile dev      # Expo dev server (press a=Android, i=iOS)
 ```
 Health check: `GET http://localhost:3000/api/v1/health`.
+
+### Running the mobile app
+- Install **Expo Go** on your phone, run `pnpm --filter @bhakti-setu/mobile dev`, and scan the QR code (phone + PC on the same Wi-Fi). Or press `a` (Android emulator) / `i` (iOS simulator).
+- The app launches **Splash → Welcome (logo, purpose, accept Terms, Register Now) → Register (OTP) → Home tabs**.
+- The mobile app talks to the API via `extra.apiBaseUrl` in `app.json` (default `http://localhost:3000/api/v1`). On a physical device, change `localhost` to your PC's LAN IP.
+
+### Monorepo notes (important)
+- `@bhakti-setu/shared` is consumed as **built JS** (`dist/`), so run its `build` once (and after changing it). `turbo dev`/`turbo build` do this automatically via `dependsOn: ["^build"]`.
+- `apps/mobile/metro.config.js` makes Metro resolve the workspace root + shared package under pnpm — don't delete it.
 
 ## What's implemented (scaffold level)
 - **Auth:** OTP request/verify (dev OTP is logged to the API console), JWT issue, register.
@@ -55,7 +65,7 @@ Health check: `GET http://localhost:3000/api/v1/health`.
 - **Realtime:** LiveKit token issuance gated by access rules; Socket.IO gateway for chat/reactions/raise-hand.
 - **Notifications:** in-app inbox + broadcast fan-out to followers/subscribers.
 - **Admin:** host verification, commission config, platform metrics, role-guarded.
-- **Mobile:** Splash, Register, OTP, Home, Rituals, Ritual booking, Live meeting (UI shell), Host profile, Inbox, Subscribe — wired to the API client, themed per branding, i18n in en/hi/te.
+- **Mobile:** Splash, **Welcome (in-app landing: logo, purpose, accept-T&C gate, Register Now)**, **Terms**, Register, OTP, Home, Rituals, Ritual booking, Live meeting (UI shell), Host profile, Inbox, Subscribe — wired to the API client, themed per branding, i18n in en/hi/te.
 
 ## Known TODOs (next vertical slices)
 - Wire `@livekit/react-native` into `LiveMeetingScreen` (currently a presentational shell).

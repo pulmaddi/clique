@@ -6,7 +6,7 @@
     "moduleResolution": "Bundler",
     "noUncheckedIndexedAccess": false,
     "lib": ["ES2022", "DOM"],
-    "types": ["react", "node"]
+    "types": ["react"]
   },
   "include": ["index.ts", "App.tsx", "src/**/*.ts", "src/**/*.tsx"]
 }

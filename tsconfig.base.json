@@ -13,11 +13,7 @@
     "declaration": true,
     "sourceMap": true,
     "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
-    "baseUrl": ".",
-    "paths": {
-      "@bhakti-setu/shared": ["packages/shared/src/index.ts"]
-    }
+    "noImplicitOverride": true
   },
   "exclude": ["node_modules", "dist", "build"]
 }

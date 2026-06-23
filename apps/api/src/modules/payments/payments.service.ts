@@ -1,4 +1,5 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { RazorpayService } from './razorpay.service';
 import { splitEarnings } from '@bhakti-setu/shared';
@@ -66,7 +67,7 @@ export class PaymentsService {
     if (!payment) throw new NotFoundException('Unknown order');
     if (payment.status === 'CAPTURED') return { handled: true }; // idempotent
 
-    await this.prisma.$transaction(async (tx) => {
+    await this.prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       await tx.payment.update({
         where: { id: payment.id },
         data: { status: 'CAPTURED', razorpayPaymentId: paymentId },

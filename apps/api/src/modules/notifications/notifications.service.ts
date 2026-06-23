@@ -37,18 +37,18 @@ export class NotificationsService {
               where: { hostId, status: 'ACTIVE' },
               select: { userId: true },
             })
-          ).map((s) => s.userId)
+          ).map((s: { userId: string }) => s.userId)
         : (
             await this.prisma.follow.findMany({
               where: { hostId },
               select: { userId: true },
             })
-          ).map((f) => f.userId);
+          ).map((f: { userId: string }) => f.userId);
 
     if (followerIds.length === 0) return { delivered: 0 };
 
     await this.prisma.notification.createMany({
-      data: followerIds.map((userId) => ({
+      data: followerIds.map((userId: string) => ({
         userId,
         title,
         body,

@@ -10,6 +10,8 @@ import { t } from './src/i18n';
 import type { RootStackParamList, MainTabParamList } from './src/navigation/types';
 
 import SplashScreen from './src/screens/SplashScreen';
+import WelcomeScreen from './src/screens/WelcomeScreen';
+import TermsScreen from './src/screens/TermsScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import OtpVerifyScreen from './src/screens/OtpVerifyScreen';
 import HomeScreen from './src/screens/HomeScreen';
@@ -55,6 +57,8 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Terms" component={TermsScreen} options={{ title: 'Terms & Conditions' }} />
           <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
           <Stack.Screen name="OtpVerify" component={OtpVerifyScreen} options={{ title: '' }} />
           <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
