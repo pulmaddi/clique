@@ -17,6 +17,9 @@
     "android": {
       "package": "com.ishta.app"
     },
+    "web": {
+      "bundler": "metro"
+    },
     "extra": {
       "apiBaseUrl": "http://localhost:3000/api/v1"
     },
