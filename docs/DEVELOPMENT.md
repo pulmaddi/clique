@@ -56,6 +56,15 @@ Health check: `GET http://localhost:3000/api/v1/health`.
 ### Monorepo notes (important)
 - `@clique/shared` is consumed as **built JS** (`dist/`), so run its `build` once (and after changing it). `turbo dev`/`turbo build` do this automatically via `dependsOn: ["^build"]`.
 - `apps/mobile/metro.config.js` makes Metro resolve the workspace root + shared package under pnpm — don't delete it.
+- **`.npmrc` sets `node-linker=hoisted`** — Expo/Metro need a flat `node_modules` to resolve transitive deps (`expo-modules-core`, `@babel/runtime`, …). Don't switch back to pnpm's isolated layout or web/native bundling breaks. After any install, run `pnpm --filter @clique/api prisma:generate`.
+
+### View the app in a PC browser (no emulator)
+```bash
+pnpm --filter @clique/mobile dev   # then press 'w'
+# or directly:
+pnpm --filter @clique/mobile exec expo start --web
+```
+Opens at `http://localhost:8081` (or the next free port). The live‑video screen is a UI shell on web; everything else renders.
 
 ## What's implemented (scaffold level)
 - **Auth:** OTP request/verify (dev OTP is logged to the API console), JWT issue, register.
