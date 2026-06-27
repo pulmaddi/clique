@@ -1,6 +1,6 @@
 export default {
   appName: 'Ishta',
-  tagline: 'Your cherished deity, always near',
+  tagline: 'Light Your Inner Path',
   namaste: 'Namaste',
   welcome: {
     purpose:

@@ -1,6 +1,6 @@
 export default {
   appName: 'इष्ट',
-  tagline: 'आपके इष्ट, सदा आपके साथ',
+  tagline: 'अपने भीतर का मार्ग आलोकित करें',
   namaste: 'नमस्ते',
   welcome: {
     purpose:
