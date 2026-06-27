@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import type { Session } from '@supabase/supabase-js';
 import { supabase, isSupabaseConfigured } from './supabase';
+import { setLocale } from '../i18n';
 
 export type Profile = {
   id: string;
@@ -28,6 +29,7 @@ type AuthState = {
     phone?: string;
     city?: string;
     state?: string;
+    language?: string;
   }) => Promise<void>;
   signOut: () => Promise<void>;
 };
@@ -57,6 +59,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       .eq('id', userId)
       .maybeSingle();
     setProfile((data as Profile) ?? null);
+    // Apply the user's saved language to the app.
+    const lang = (data as Profile)?.language;
+    if (lang === 'en' || lang === 'hi' || lang === 'te') setLocale(lang);
   };
 
   useEffect(() => {

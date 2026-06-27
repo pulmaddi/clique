@@ -5,20 +5,17 @@ import {
   TextInput,
   ScrollView,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import { colors, radius, spacing } from '../theme';
 import { Button } from '../components/ui';
 import { t } from '../i18n';
 import { useAuth } from '../lib/auth';
-
-const LANG_LABEL: Record<string, string> = {
-  en: 'English',
-  hi: 'हिन्दी',
-  te: 'తెలుగు',
-};
+import { useLocale, LANGUAGES, type Lang } from '../lib/locale';
 
 export default function MyProfileScreen() {
   const { profile, email, updateProfile } = useAuth();
+  const { lang, changeLang } = useLocale();
   const [name, setName] = useState(profile?.name ?? '');
   const [phone, setPhone] = useState(profile?.phone ?? '');
   const [city, setCity] = useState(profile?.city ?? '');
@@ -101,10 +98,29 @@ export default function MyProfileScreen() {
 
       <View style={styles.field}>
         <Text style={styles.label}>{t('myProfile.language')}</Text>
-        <View style={[styles.input, styles.readonly]}>
-          <Text style={styles.readonlyText}>
-            {LANG_LABEL[profile?.language ?? 'en'] ?? 'English'}
-          </Text>
+        <View style={styles.chips}>
+          {LANGUAGES.map((l) => {
+            const active = (profile?.language ?? lang) === l.code;
+            return (
+              <TouchableOpacity
+                key={l.code}
+                style={[styles.chip, active && styles.chipOn]}
+                onPress={async () => {
+                  changeLang(l.code as Lang);
+                  try {
+                    await updateProfile({ language: l.code });
+                    setMsg('Language updated ✓');
+                  } catch {
+                    /* ignore */
+                  }
+                }}
+              >
+                <Text style={[styles.chipText, active && styles.chipTextOn]}>
+                  {l.label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </View>
 
@@ -134,6 +150,18 @@ const styles = StyleSheet.create({
   },
   readonly: { backgroundColor: '#F4ECDF', justifyContent: 'center' },
   readonlyText: { fontSize: 15, color: colors.muted },
+  chips: { flexDirection: 'row', gap: 8 },
+  chip: {
+    borderColor: colors.line,
+    borderWidth: 1,
+    borderRadius: radius.pill,
+    paddingHorizontal: 16,
+    paddingVertical: 9,
+    backgroundColor: colors.white,
+  },
+  chipOn: { backgroundColor: colors.maroon, borderColor: colors.maroon },
+  chipText: { color: colors.ink, fontSize: 13 },
+  chipTextOn: { color: colors.white },
   note: { fontSize: 11, color: colors.muted, marginTop: 4 },
   err: { color: colors.live, fontSize: 13, marginTop: 14 },
   ok: { color: colors.green, fontSize: 13, marginTop: 14, fontWeight: '600' },

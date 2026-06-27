@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -6,8 +6,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { colors } from './src/theme';
-import { t } from './src/i18n';
+import { t, setLocale } from './src/i18n';
 import { AuthProvider } from './src/lib/auth';
+import { LocaleContext, type Lang } from './src/lib/locale';
 import type { RootStackParamList, MainTabParamList } from './src/navigation/types';
 
 import SplashScreen from './src/screens/SplashScreen';
@@ -49,8 +50,15 @@ function MainTabs() {
 }
 
 export default function App() {
+  const [lang, setLang] = useState<Lang>('en');
+  const changeLang = useCallback((l: Lang) => {
+    setLocale(l);
+    setLang(l);
+  }, []);
+
   return (
     <SafeAreaProvider>
+      <LocaleContext.Provider value={{ lang, changeLang }}>
       <AuthProvider>
       <NavigationContainer>
         <StatusBar style="light" />
@@ -76,6 +84,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
       </AuthProvider>
+      </LocaleContext.Provider>
     </SafeAreaProvider>
   );
 }
