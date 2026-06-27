@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
@@ -22,9 +23,12 @@ export default function WelcomeScreen({ navigation }: Props) {
       <ScrollView contentContainerStyle={styles.scroll}>
         {/* Logo + identity */}
         <View style={styles.logoBadge}>
-          <Text style={styles.logo}>🪔</Text>
+          <Image
+            source={require('../../assets/ishta-logo.jpeg')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
         </View>
-        <Text style={styles.name}>{t('appName')}</Text>
         <Text style={styles.tag}>{t('tagline')}</Text>
 
         {/* Purpose of the app */}
@@ -89,18 +93,14 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.maroon },
   scroll: { alignItems: 'center', paddingTop: 64, paddingHorizontal: spacing.xl, paddingBottom: 20 },
   logoBadge: {
-    width: 84,
-    height: 84,
-    borderRadius: 24,
-    backgroundColor: 'rgba(255,255,255,0.14)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.3)',
+    borderRadius: 20,
+    backgroundColor: colors.white,
+    padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logo: { fontSize: 44 },
-  name: { color: colors.white, fontSize: 30, fontWeight: '800', marginTop: 16 },
-  tag: { color: colors.cream, fontSize: 14, opacity: 0.9, marginTop: 2 },
+  logo: { width: 130, height: 143 },
+  tag: { color: colors.cream, fontSize: 14, opacity: 0.9, marginTop: 14 },
   purpose: {
     color: colors.cream,
     fontSize: 15,

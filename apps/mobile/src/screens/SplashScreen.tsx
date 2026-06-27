@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/types';
 import { colors } from '../theme';
@@ -15,8 +15,13 @@ export default function SplashScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>🪔</Text>
-      <Text style={styles.name}>{t('appName')}</Text>
+      <View style={styles.logoCard}>
+        <Image
+          source={require('../../assets/ishta-logo.jpeg')}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+      </View>
       <Text style={styles.tag}>{t('tagline')}</Text>
       <Text style={styles.langs}>English · हिन्दी · తెలుగు</Text>
     </View>
@@ -30,8 +35,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logo: { fontSize: 64 },
-  name: { color: colors.white, fontSize: 28, fontWeight: '700', marginTop: 12 },
-  tag: { color: colors.cream, fontSize: 13, marginTop: 4, opacity: 0.9 },
+  logoCard: { backgroundColor: colors.white, borderRadius: 20, padding: 18 },
+  logo: { width: 150, height: 165 },
+  tag: { color: colors.cream, fontSize: 13, marginTop: 16, opacity: 0.9 },
   langs: { color: colors.cream, fontSize: 11, position: 'absolute', bottom: 40, opacity: 0.8 },
 });
