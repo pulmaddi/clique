@@ -8,7 +8,7 @@ import type { MainTabParamList, RootStackParamList } from '../navigation/types';
 import { colors, radius, spacing } from '../theme';
 import { t } from '../i18n';
 
-type Props = BottomTabScreenProps<MainTabParamList, 'Rituals'>;
+type Props = BottomTabScreenProps<MainTabParamList, 'TodaysPuja'>;
 
 const RITUALS = [
   { icon: '🪔', label: 'Aarti', sub: 'daily' },
@@ -29,7 +29,7 @@ export default function RitualsScreen(_props: Props) {
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <View style={styles.topbar}>
-        <Text style={styles.title}>🪔 {t('rituals.title')}</Text>
+        <Text style={styles.title}>🪔 {t('tabs.todaysPuja')}</Text>
       </View>
       <ScrollView contentContainerStyle={styles.body}>
         <Text style={styles.hint}>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/types';
@@ -23,7 +22,7 @@ export default function ProfileScreen() {
 
   const onLogout = async () => {
     await signOut();
-    nav.getParent()?.reset({ index: 0, routes: [{ name: 'Welcome' }] });
+    nav.reset({ index: 0, routes: [{ name: 'Welcome' }] });
   };
 
   const MenuRow = ({
@@ -45,19 +44,19 @@ export default function ProfileScreen() {
   );
 
   return (
-    <SafeAreaView style={styles.safe} edges={['top']}>
-      <View style={styles.header}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>{initial}</Text>
-        </View>
-        <Text style={styles.name}>{name}</Text>
-        {!!email && <Text style={styles.email}>{email}</Text>}
-        <Text style={styles.lang}>
-          🌐 {LANG_LABEL[profile?.language ?? 'en'] ?? 'English'}
-        </Text>
-      </View>
-
+    <View style={styles.safe}>
       <ScrollView contentContainerStyle={styles.body}>
+        <View style={styles.header}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>{initial}</Text>
+          </View>
+          <Text style={styles.name}>{name}</Text>
+          {!!email && <Text style={styles.email}>{email}</Text>}
+          <Text style={styles.lang}>
+            🌐 {LANG_LABEL[profile?.language ?? 'en'] ?? 'English'}
+          </Text>
+        </View>
+
         <Text style={styles.section}>{t('profile.account')}</Text>
         <View style={styles.card}>
           <MenuRow
@@ -90,33 +89,25 @@ export default function ProfileScreen() {
 
         <Text style={styles.version}>Ishta · v0.1</Text>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.cream },
-  header: {
-    backgroundColor: colors.maroon,
-    alignItems: 'center',
-    paddingVertical: spacing.xl,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-  },
+  header: { alignItems: 'center', paddingVertical: spacing.md },
   avatar: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
-    backgroundColor: 'rgba(255,255,255,0.18)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.35)',
+    width: 76,
+    height: 76,
+    borderRadius: 38,
+    backgroundColor: colors.maroon,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  avatarText: { color: colors.white, fontSize: 30, fontWeight: '800' },
-  name: { color: colors.white, fontSize: 20, fontWeight: '700', marginTop: 12 },
-  email: { color: colors.cream, fontSize: 13, opacity: 0.9, marginTop: 2 },
-  lang: { color: colors.cream, fontSize: 12, opacity: 0.85, marginTop: 8 },
+  avatarText: { color: colors.white, fontSize: 32, fontWeight: '800' },
+  name: { color: colors.ink, fontSize: 20, fontWeight: '700', marginTop: 12 },
+  email: { color: colors.muted, fontSize: 13, marginTop: 2 },
+  lang: { color: colors.muted, fontSize: 12, marginTop: 8 },
   body: { padding: spacing.lg, paddingBottom: 40 },
   section: {
     fontSize: 12,

@@ -5,6 +5,7 @@ export type RootStackParamList = {
   Register: undefined;
   Login: undefined;
   Main: undefined;
+  Profile: undefined;
   MyProfile: undefined;
   ChangePassword: undefined;
   RitualBooking: { occasionId: string; title: string };
@@ -15,8 +16,7 @@ export type RootStackParamList = {
 
 export type MainTabParamList = {
   Home: undefined;
-  Rituals: undefined;
-  Events: undefined;
-  Inbox: undefined;
-  Profile: undefined;
+  TodaysPuja: undefined;
+  JoinCommunity: undefined;
+  JoinMeeting: undefined;
 };

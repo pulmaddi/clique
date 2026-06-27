@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import type { MainTabParamList } from '../navigation/types';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { MainTabParamList, RootStackParamList } from '../navigation/types';
 import { colors, radius, spacing } from '../theme';
 import { Card, Title, Muted, Button, LiveBadge } from '../components/ui';
 import { t } from '../i18n';
@@ -17,7 +19,8 @@ import { useAuth } from '../lib/auth';
 
 type Props = BottomTabScreenProps<MainTabParamList, 'Home'>;
 
-export default function HomeScreen({ navigation }: Props) {
+export default function HomeScreen(_props: Props) {
+  const rootNav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { profile } = useAuth();
   const fullName = profile?.name?.trim() || t('profile.devotee');
   const firstName = fullName.split(' ')[0];
@@ -32,7 +35,7 @@ export default function HomeScreen({ navigation }: Props) {
         </View>
         <TouchableOpacity
           style={styles.avatar}
-          onPress={() => navigation.navigate('Profile')}
+          onPress={() => rootNav.navigate('Profile')}
           accessibilityLabel={t('tabs.profile')}
         >
           <Text style={{ color: colors.white, fontWeight: '700' }}>{initial}</Text>

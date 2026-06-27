@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { Text } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -18,15 +19,21 @@ import RegisterScreen from './src/screens/RegisterScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import RitualsScreen from './src/screens/RitualsScreen';
+import JoinCommunityScreen from './src/screens/JoinCommunityScreen';
+import JoinMeetingScreen from './src/screens/JoinMeetingScreen';
 import RitualBookingScreen from './src/screens/RitualBookingScreen';
 import LiveMeetingScreen from './src/screens/LiveMeetingScreen';
 import HostProfileScreen from './src/screens/HostProfileScreen';
-import InboxScreen from './src/screens/InboxScreen';
 import SubscribeScreen from './src/screens/SubscribeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import MyProfileScreen from './src/screens/MyProfileScreen';
 import ChangePasswordScreen from './src/screens/ChangePasswordScreen';
-import PlaceholderScreen from './src/screens/PlaceholderScreen';
+
+// Emoji tab icon helper (no extra icon library needed).
+const tabIcon =
+  (emoji: string) =>
+  ({ focused }: { focused: boolean }) =>
+    <Text style={{ fontSize: 18, opacity: focused ? 1 : 0.55 }}>{emoji}</Text>;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -38,13 +45,29 @@ function MainTabs() {
         headerShown: false,
         tabBarActiveTintColor: colors.saffron,
         tabBarInactiveTintColor: colors.muted,
+        tabBarLabelStyle: { fontSize: 10 },
       }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} options={{ title: t('tabs.home') }} />
-      <Tab.Screen name="Rituals" component={RitualsScreen} options={{ title: t('tabs.rituals') }} />
-      <Tab.Screen name="Events" component={PlaceholderScreen} options={{ title: t('tabs.events') }} />
-      <Tab.Screen name="Inbox" component={InboxScreen} options={{ title: t('tabs.inbox') }} />
-      <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: t('tabs.profile') }} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ title: t('tabs.home'), tabBarIcon: tabIcon('🏠') }}
+      />
+      <Tab.Screen
+        name="TodaysPuja"
+        component={RitualsScreen}
+        options={{ title: t('tabs.todaysPuja'), tabBarIcon: tabIcon('🪔') }}
+      />
+      <Tab.Screen
+        name="JoinCommunity"
+        component={JoinCommunityScreen}
+        options={{ title: t('tabs.joinCommunity'), tabBarIcon: tabIcon('👥') }}
+      />
+      <Tab.Screen
+        name="JoinMeeting"
+        component={JoinMeetingScreen}
+        options={{ title: t('tabs.joinMeeting'), tabBarIcon: tabIcon('🎥') }}
+      />
     </Tab.Navigator>
   );
 }
@@ -75,6 +98,7 @@ export default function App() {
           <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
+          <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: t('tabs.profile') }} />
           <Stack.Screen name="RitualBooking" component={RitualBookingScreen} options={{ title: 'Book Ritual' }} />
           <Stack.Screen name="LiveMeeting" component={LiveMeetingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="HostProfile" component={HostProfileScreen} options={{ title: '' }} />
