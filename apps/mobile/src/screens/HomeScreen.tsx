@@ -58,6 +58,28 @@ export default function HomeScreen({ navigation }: Props) {
       </View>
 
       <ScrollView contentContainerStyle={styles.body}>
+        {/* Featured: Ishta Daiva Pooja */}
+        <TouchableOpacity
+          style={styles.featured}
+          activeOpacity={0.85}
+          onPress={() =>
+            profile?.ishta_daiva
+              ? navigation.navigate('TodaysPuja')
+              : rootNav.navigate('MyProfile')
+          }
+        >
+          <Text style={styles.featuredIcon}>🕉️</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.featuredTitle}>{t('home.ishtaDaivaPooja')}</Text>
+            <Text style={styles.featuredSub}>
+              {profile?.ishta_daiva
+                ? `${t('home.forYour')} ${profile.ishta_daiva} 🙏`
+                : t('home.setIshtaDaiva')}
+            </Text>
+          </View>
+          <Text style={styles.featuredArrow}>›</Text>
+        </TouchableOpacity>
+
         {/* Daily practices */}
         <Text style={styles.section}>{t('home.dailyPractices')}</Text>
         <View style={styles.grid}>
@@ -141,6 +163,18 @@ const styles = StyleSheet.create({
   },
   body: { padding: spacing.lg, paddingBottom: 30 },
   section: { fontSize: 15, fontWeight: '700', color: colors.ink },
+  featured: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    backgroundColor: colors.maroon,
+    borderRadius: radius.lg,
+    padding: 16,
+  },
+  featuredIcon: { fontSize: 30 },
+  featuredTitle: { color: colors.white, fontSize: 16, fontWeight: '800' },
+  featuredSub: { color: colors.cream, fontSize: 12, opacity: 0.9, marginTop: 2 },
+  featuredArrow: { color: colors.white, fontSize: 24, opacity: 0.8 },
   sectionHdr: {
     flexDirection: 'row',
     justifyContent: 'space-between',

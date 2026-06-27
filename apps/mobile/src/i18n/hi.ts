@@ -46,6 +46,9 @@ export default {
     templeCommunity: 'मंदिर समुदाय से जुड़ें',
     seeAll: 'सभी देखें',
     join: 'जुड़ें',
+    ishtaDaivaPooja: 'इष्ट देव पूजा करें',
+    forYour: 'आपके',
+    setIshtaDaiva: 'प्रोफ़ाइल में अपना इष्ट देव चुनें →',
   },
   tabs: {
     home: 'होम',
@@ -90,6 +93,8 @@ export default {
     email: 'ईमेल',
     emailNote: 'ईमेल आपका लॉगिन है और यहाँ नहीं बदला जा सकता।',
     phone: 'फ़ोन',
+    ishtaDaiva: 'इष्ट देव / प्रिय भगवान',
+    ishtaDaivaPlaceholder: 'जैसे वेंकटेश्वर, शिव, लक्ष्मी…',
     city: 'शहर',
     language: 'पसंदीदा भाषा',
     location: 'स्थान',

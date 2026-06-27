@@ -46,6 +46,9 @@ export default {
     templeCommunity: 'ఆలయ సంఘంలో చేరండి',
     seeAll: 'అన్నీ చూడండి',
     join: 'చేరండి',
+    ishtaDaivaPooja: 'ఇష్ట దైవ పూజ చేయండి',
+    forYour: 'మీ',
+    setIshtaDaiva: 'ప్రొఫైల్‌లో మీ ఇష్ట దైవాన్ని ఎంచుకోండి →',
   },
   tabs: {
     home: 'హోమ్',
@@ -90,6 +93,8 @@ export default {
     email: 'ఇమెయిల్',
     emailNote: 'ఇమెయిల్ మీ లాగిన్ — ఇక్కడ మార్చలేరు.',
     phone: 'ఫోన్',
+    ishtaDaiva: 'ఇష్ట దైవం / ఇష్టమైన దేవుడు',
+    ishtaDaivaPlaceholder: 'ఉదా. వెంకటేశ్వర, శివ, లక్ష్మి…',
     city: 'నగరం',
     language: 'ఇష్టమైన భాష',
     location: 'ప్రాంతం',

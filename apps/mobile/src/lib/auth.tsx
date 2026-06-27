@@ -13,6 +13,7 @@ export type Profile = {
   id: string;
   name: string | null;
   phone: string | null;
+  ishta_daiva: string | null;
   language: string | null;
   city: string | null;
   state: string | null;
@@ -27,6 +28,7 @@ type AuthState = {
   updateProfile: (patch: {
     name?: string;
     phone?: string;
+    ishta_daiva?: string;
     city?: string;
     state?: string;
     language?: string;
@@ -55,7 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!userId || !isSupabaseConfigured) return setProfile(null);
     const { data } = await supabase
       .from('profiles')
-      .select('id,name,phone,language,city,state')
+      .select('id,name,phone,ishta_daiva,language,city,state')
       .eq('id', userId)
       .maybeSingle();
     setProfile((data as Profile) ?? null);

@@ -10,6 +10,7 @@ create table if not exists public.profiles (
   id          uuid primary key references auth.users (id) on delete cascade,
   name        text,
   phone       text,
+  ishta_daiva text,        -- chosen personal deity (Ishta Daiva / favourite god)
   language    text default 'en',
   city        text,
   state       text,
@@ -17,8 +18,9 @@ create table if not exists public.profiles (
   updated_at  timestamptz not null default now()
 );
 
--- Additive: ensures the column exists if the table was created earlier.
+-- Additive: ensures columns exist if the table was created earlier.
 alter table public.profiles add column if not exists phone text;
+alter table public.profiles add column if not exists ishta_daiva text;
 
 -- 2. Row-Level Security: a user can see/edit only their own profile -
 alter table public.profiles enable row level security;

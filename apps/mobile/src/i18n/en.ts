@@ -46,6 +46,9 @@ export default {
     templeCommunity: 'Join Temple Community',
     seeAll: 'See all',
     join: 'Join',
+    ishtaDaivaPooja: 'Perform Ishta Daiva Pooja',
+    forYour: 'For your',
+    setIshtaDaiva: 'Set your Ishta Daiva in profile →',
   },
   tabs: {
     home: 'Home',
@@ -90,6 +93,8 @@ export default {
     email: 'Email',
     emailNote: 'Email is your login and can’t be changed here.',
     phone: 'Phone',
+    ishtaDaiva: 'Ishta Daiva / Favourite God',
+    ishtaDaivaPlaceholder: 'e.g. Venkateswara, Shiva, Lakshmi…',
     city: 'City',
     language: 'Preferred language',
     location: 'Location',

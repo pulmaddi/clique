@@ -13,11 +13,27 @@ import { t } from '../i18n';
 import { useAuth } from '../lib/auth';
 import { useLocale, LANGUAGES, type Lang } from '../lib/locale';
 
+const DEITIES = [
+  'Ganesha',
+  'Shiva',
+  'Vishnu',
+  'Venkateswara',
+  'Rama',
+  'Krishna',
+  'Hanuman',
+  'Lakshmi',
+  'Durga',
+  'Saraswati',
+  'Subrahmanya',
+  'Ayyappa',
+];
+
 export default function MyProfileScreen() {
   const { profile, email, updateProfile } = useAuth();
   const { lang, changeLang } = useLocale();
   const [name, setName] = useState(profile?.name ?? '');
   const [phone, setPhone] = useState(profile?.phone ?? '');
+  const [ishta, setIshta] = useState(profile?.ishta_daiva ?? '');
   const [city, setCity] = useState(profile?.city ?? '');
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState('');
@@ -35,6 +51,7 @@ export default function MyProfileScreen() {
       await updateProfile({
         name: name.trim(),
         phone: phone.trim(),
+        ishta_daiva: ishta.trim(),
         city: city.trim(),
       });
       setMsg('Profile updated ✓');
@@ -83,6 +100,31 @@ export default function MyProfileScreen() {
           placeholderTextColor={colors.muted}
           keyboardType="phone-pad"
         />
+      </View>
+
+      <View style={styles.field}>
+        <Text style={styles.label}>{t('myProfile.ishtaDaiva')}</Text>
+        <TextInput
+          style={styles.input}
+          value={ishta}
+          onChangeText={setIshta}
+          placeholder={t('myProfile.ishtaDaivaPlaceholder')}
+          placeholderTextColor={colors.muted}
+          autoCapitalize="words"
+        />
+        <View style={styles.deities}>
+          {DEITIES.map((d) => (
+            <TouchableOpacity
+              key={d}
+              style={[styles.chip, ishta === d && styles.chipOn]}
+              onPress={() => setIshta(d)}
+            >
+              <Text style={[styles.chipText, ishta === d && styles.chipTextOn]}>
+                🙏 {d}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
 
       <View style={styles.field}>
@@ -151,6 +193,7 @@ const styles = StyleSheet.create({
   readonly: { backgroundColor: '#F4ECDF', justifyContent: 'center' },
   readonlyText: { fontSize: 15, color: colors.muted },
   chips: { flexDirection: 'row', gap: 8 },
+  deities: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 8 },
   chip: {
     borderColor: colors.line,
     borderWidth: 1,
