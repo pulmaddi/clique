@@ -81,7 +81,7 @@ export default function WelcomeScreen({ navigation }: Props) {
           <Text style={styles.hint}>{t('welcome.acceptHint')}</Text>
         )}
 
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.signin}>{t('welcome.haveAccount')}</Text>
         </TouchableOpacity>
       </View>

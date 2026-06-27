@@ -13,7 +13,7 @@ import SplashScreen from './src/screens/SplashScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import TermsScreen from './src/screens/TermsScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
-import OtpVerifyScreen from './src/screens/OtpVerifyScreen';
+import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import RitualsScreen from './src/screens/RitualsScreen';
 import RitualBookingScreen from './src/screens/RitualBookingScreen';
@@ -60,7 +60,7 @@ export default function App() {
           <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Terms" component={TermsScreen} options={{ title: 'Terms & Conditions' }} />
           <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="OtpVerify" component={OtpVerifyScreen} options={{ title: '' }} />
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
           <Stack.Screen name="RitualBooking" component={RitualBookingScreen} options={{ title: 'Book Ritual' }} />
           <Stack.Screen name="LiveMeeting" component={LiveMeetingScreen} options={{ headerShown: false }} />

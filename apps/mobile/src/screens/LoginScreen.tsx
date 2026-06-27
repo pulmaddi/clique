@@ -1,0 +1,120 @@
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '../navigation/types';
+import { colors, radius, spacing } from '../theme';
+import { Button } from '../components/ui';
+import { t } from '../i18n';
+
+type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export default function LoginScreen({ navigation }: Props) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const onSignIn = () => {
+    if (!EMAIL_RE.test(email)) return setError('Please enter a valid email address.');
+    if (password.length < 6) return setError('Please enter your password.');
+    setError('');
+    // No authentication yet — proceed into the app.
+    navigation.replace('Main');
+  };
+
+  return (
+    <ScrollView
+      style={styles.screen}
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
+      <View style={styles.logoWrap}>
+        <Image
+          source={require('../../assets/ishta-logo.png')}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+      </View>
+
+      <Text style={styles.h1}>{t('login.title')}</Text>
+      <Text style={styles.sub}>{t('login.subtitle')}</Text>
+
+      <View style={styles.field}>
+        <Text style={styles.label}>{t('login.email')}</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="you@example.com"
+          placeholderTextColor={colors.muted}
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoComplete="email"
+        />
+      </View>
+
+      <View style={styles.field}>
+        <Text style={styles.label}>{t('login.password')}</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="••••••••"
+          placeholderTextColor={colors.muted}
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+      </View>
+
+      {!!error && <Text style={styles.error}>{error}</Text>}
+
+      <Button label={t('login.signIn')} onPress={onSignIn} />
+      <TouchableOpacity onPress={() => navigation.replace('Register')}>
+        <Text style={styles.alt}>{t('login.noAccount')}</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: colors.cream },
+  container: { padding: spacing.xl, paddingBottom: 40 },
+  logoWrap: {
+    alignSelf: 'center',
+    marginTop: 24,
+    backgroundColor: colors.white,
+    borderRadius: 16,
+    padding: 10,
+  },
+  logo: { width: 80, height: 80 },
+  h1: { fontSize: 22, fontWeight: '700', color: colors.maroon, marginTop: 18 },
+  sub: { fontSize: 13, color: colors.muted, marginTop: 4, marginBottom: 8 },
+  field: { marginTop: 14 },
+  label: { fontSize: 12, fontWeight: '600', color: colors.muted, marginBottom: 6 },
+  input: {
+    backgroundColor: colors.white,
+    borderColor: colors.line,
+    borderWidth: 1,
+    borderRadius: radius.md,
+    paddingHorizontal: 14,
+    paddingVertical: 13,
+    fontSize: 15,
+    color: colors.ink,
+  },
+  error: { color: colors.live, fontSize: 13, marginTop: 14 },
+  alt: {
+    textAlign: 'center',
+    color: colors.maroon,
+    fontWeight: '700',
+    fontSize: 14,
+    marginTop: 18,
+  },
+});

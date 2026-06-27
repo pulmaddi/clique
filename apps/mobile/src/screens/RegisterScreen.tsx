@@ -13,7 +13,6 @@ import type { RootStackParamList } from '../navigation/types';
 import { colors, radius, spacing } from '../theme';
 import { Button } from '../components/ui';
 import { t, setLocale } from '../i18n';
-import { api } from '../api/client';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Register'>;
 const LANGS: { code: 'en' | 'hi' | 'te'; label: string }[] = [
@@ -22,23 +21,32 @@ const LANGS: { code: 'en' | 'hi' | 'te'; label: string }[] = [
   { code: 'te', label: 'తెలుగు' },
 ];
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function RegisterScreen({ navigation }: Props) {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
   const [lang, setLang] = useState<'en' | 'hi' | 'te'>('en');
+  const [error, setError] = useState('');
 
-  const onSendOtp = async () => {
-    const full = `+91${phone.replace(/\D/g, '')}`;
-    try {
-      await api.requestOtp(full);
-    } catch {
-      // For the scaffold we proceed to OTP screen regardless (dev OTP logged by API).
-    }
-    navigation.navigate('OtpVerify', { phone: full });
+  const onCreate = () => {
+    if (name.trim().length < 2) return setError('Please enter your name.');
+    if (!EMAIL_RE.test(email)) return setError('Please enter a valid email address.');
+    if (password.length < 6) return setError('Password must be at least 6 characters.');
+    if (password !== confirm) return setError('Passwords do not match.');
+    setError('');
+    // No authentication yet — proceed into the app (email/password captured locally).
+    navigation.replace('Main');
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      style={styles.screen}
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.logoWrap}>
         <Image
           source={require('../../assets/ishta-logo.png')}
@@ -46,89 +54,129 @@ export default function RegisterScreen({ navigation }: Props) {
           resizeMode="contain"
         />
       </View>
+
       <Text style={styles.h1}>{t('register.title')}</Text>
       <Text style={styles.sub}>{t('register.subtitle')}</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder={t('register.fullName')}
-        value={name}
-        onChangeText={setName}
-      />
-      <View style={styles.phoneRow}>
-        <Text style={styles.cc}>🇮🇳 +91</Text>
+      <View style={styles.field}>
+        <Text style={styles.label}>{t('register.fullName')}</Text>
         <TextInput
-          style={[styles.input, styles.phoneInput]}
-          placeholder={t('register.mobile')}
-          keyboardType="phone-pad"
-          value={phone}
-          onChangeText={setPhone}
+          style={styles.input}
+          placeholder={t('register.fullName')}
+          placeholderTextColor={colors.muted}
+          value={name}
+          onChangeText={setName}
+          autoCapitalize="words"
+          autoComplete="name"
         />
       </View>
 
-      <Text style={styles.label}>{t('register.language')}</Text>
-      <View style={styles.chips}>
-        {LANGS.map((l) => (
-          <TouchableOpacity
-            key={l.code}
-            style={[styles.chip, lang === l.code && styles.chipOn]}
-            onPress={() => {
-              setLang(l.code);
-              setLocale(l.code);
-            }}
-          >
-            <Text style={[styles.chipText, lang === l.code && styles.chipTextOn]}>
-              {l.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
+      <View style={styles.field}>
+        <Text style={styles.label}>{t('register.email')}</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="you@example.com"
+          placeholderTextColor={colors.muted}
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoComplete="email"
+        />
       </View>
 
-      <Button label={t('register.sendOtp')} onPress={onSendOtp} />
+      <View style={styles.field}>
+        <Text style={styles.label}>{t('register.password')}</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="••••••••"
+          placeholderTextColor={colors.muted}
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+      </View>
+
+      <View style={styles.field}>
+        <Text style={styles.label}>{t('register.confirmPassword')}</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="••••••••"
+          placeholderTextColor={colors.muted}
+          value={confirm}
+          onChangeText={setConfirm}
+          secureTextEntry
+        />
+      </View>
+
+      <View style={styles.field}>
+        <Text style={styles.label}>{t('register.language')}</Text>
+        <View style={styles.chips}>
+          {LANGS.map((l) => (
+            <TouchableOpacity
+              key={l.code}
+              style={[styles.chip, lang === l.code && styles.chipOn]}
+              onPress={() => {
+                setLang(l.code);
+                setLocale(l.code);
+              }}
+            >
+              <Text style={[styles.chipText, lang === l.code && styles.chipTextOn]}>
+                {l.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+
+      {!!error && <Text style={styles.error}>{error}</Text>}
+
+      <Button label={t('register.createAccount')} onPress={onCreate} />
       <Button
         label={t('register.haveAccount')}
         variant="outline"
-        onPress={onSendOtp}
+        onPress={() => navigation.navigate('Login')}
       />
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: spacing.xl, backgroundColor: colors.cream, flexGrow: 1 },
+  screen: { flex: 1, backgroundColor: colors.cream },
+  container: { padding: spacing.xl, paddingBottom: 40 },
   logoWrap: {
     alignSelf: 'center',
-    marginTop: 24,
+    marginTop: 16,
     backgroundColor: colors.white,
     borderRadius: 16,
     padding: 10,
   },
-  logo: { width: 88, height: 88 },
-  h1: { fontSize: 22, fontWeight: '700', color: colors.maroon, marginTop: 12 },
-  sub: { fontSize: 13, color: colors.muted, marginBottom: 16 },
+  logo: { width: 80, height: 80 },
+  h1: { fontSize: 22, fontWeight: '700', color: colors.maroon, marginTop: 18 },
+  sub: { fontSize: 13, color: colors.muted, marginTop: 4, marginBottom: 8 },
+  field: { marginTop: 14 },
+  label: { fontSize: 12, fontWeight: '600', color: colors.muted, marginBottom: 6 },
   input: {
     backgroundColor: colors.white,
     borderColor: colors.line,
     borderWidth: 1,
     borderRadius: radius.md,
-    padding: 12,
-    marginVertical: 6,
-    fontSize: 14,
+    paddingHorizontal: 14,
+    paddingVertical: 13,
+    fontSize: 15,
+    color: colors.ink,
   },
-  phoneRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  cc: { fontSize: 14, color: colors.ink },
-  phoneInput: { flex: 1 },
-  label: { fontSize: 12, color: colors.muted, marginTop: 12 },
-  chips: { flexDirection: 'row', gap: 8, marginVertical: 8 },
+  chips: { flexDirection: 'row', gap: 8 },
   chip: {
     borderColor: colors.line,
     borderWidth: 1,
     borderRadius: radius.pill,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 9,
     backgroundColor: colors.white,
   },
   chipOn: { backgroundColor: colors.maroon, borderColor: colors.maroon },
   chipText: { color: colors.ink, fontSize: 13 },
   chipTextOn: { color: colors.white },
+  error: { color: colors.live, fontSize: 13, marginTop: 14 },
 });

@@ -3,7 +3,7 @@ export type RootStackParamList = {
   Welcome: undefined;
   Terms: undefined;
   Register: undefined;
-  OtpVerify: { phone: string };
+  Login: undefined;
   Main: undefined;
   RitualBooking: { occasionId: string; title: string };
   LiveMeeting: { occasionInstanceId: string; title: string };
