@@ -4,7 +4,6 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -13,18 +12,34 @@ import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { MainTabParamList, RootStackParamList } from '../navigation/types';
 import { colors, radius, spacing } from '../theme';
-import { Card, Title, Muted, Button, LiveBadge } from '../components/ui';
+import { Card, Title, Muted, Button } from '../components/ui';
 import { t } from '../i18n';
 import { useAuth } from '../lib/auth';
 
 type Props = BottomTabScreenProps<MainTabParamList, 'Home'>;
 
-export default function HomeScreen(_props: Props) {
+export default function HomeScreen({ navigation }: Props) {
   const rootNav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { profile } = useAuth();
   const fullName = profile?.name?.trim() || t('profile.devotee');
   const firstName = fullName.split(' ')[0];
   const initial = (firstName[0] || '🙏').toUpperCase();
+
+  const practices: { icon: string; label: string; onPress: () => void }[] = [
+    { icon: '🪔', label: t('home.todaysPooja'), onPress: () => navigation.navigate('TodaysPuja') },
+    { icon: '🌺', label: t('home.vratha'), onPress: () => navigation.navigate('TodaysPuja') },
+    { icon: '📿', label: t('home.japa'), onPress: () => navigation.navigate('TodaysPuja') },
+    { icon: '📜', label: t('home.slokas'), onPress: () => navigation.navigate('TodaysPuja') },
+  ];
+
+  const groups = [
+    { icon: '🧘', name: 'Swami Anand', meta: 'Guru · Hindi · Rishikesh' },
+    { icon: '👥', name: 'Bhakti Mandali', meta: 'Group · Telugu · Vijayawada' },
+  ];
+  const temples = [
+    { icon: '🛕', name: 'Sri Venkateswara Temple', meta: 'Temple · Telugu · Hyderabad' },
+    { icon: '🛕', name: 'ISKCON Bengaluru', meta: 'Temple · English/Hindi' },
+  ];
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
@@ -43,39 +58,63 @@ export default function HomeScreen(_props: Props) {
       </View>
 
       <ScrollView contentContainerStyle={styles.body}>
-        <TextInput
-          style={styles.search}
-          placeholder="🔍 Search temples, Gurus, groups…"
-          placeholderTextColor={colors.muted}
-        />
-
-        <Card style={styles.liveCard}>
-          <LiveBadge />
-          <Title>Evening Aarti — Sri Venkateswara</Title>
-          <Muted>2,140 watching · Telugu</Muted>
-          <Button label={t('common.join')} />
-        </Card>
-
-        <Text style={styles.section}>{t('home.upcoming')}</Text>
-        <Card>
-          <Title>Weekly Satsang — Swami Anand</Title>
-          <Muted>Sun 7:00 PM · Subscriber</Muted>
-        </Card>
-        <Card>
-          <Title>Navaratri Special Puja</Title>
-          <Muted>Fri 6:30 PM · ₹151</Muted>
-        </Card>
-
-        <Text style={styles.section}>{t('home.following')}</Text>
-        <View style={styles.chips}>
-          {['🛕 Sri Venkateswara', '🧘 Swami Anand', '👥 Bhakti Mandali'].map(
-            (x) => (
-              <View key={x} style={styles.chip}>
-                <Text style={styles.chipText}>{x}</Text>
+        {/* Daily practices */}
+        <Text style={styles.section}>{t('home.dailyPractices')}</Text>
+        <View style={styles.grid}>
+          {practices.map((p) => (
+            <TouchableOpacity
+              key={p.label}
+              style={styles.tile}
+              onPress={p.onPress}
+              activeOpacity={0.8}
+            >
+              <View style={styles.tileIconWrap}>
+                <Text style={styles.tileIcon}>{p.icon}</Text>
               </View>
-            ),
-          )}
+              <Text style={styles.tileLabel}>{p.label}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
+
+        {/* Spiritual groups */}
+        <View style={styles.sectionHdr}>
+          <Text style={styles.section}>🧘 {t('home.spiritualGroups')}</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('JoinCommunity')}>
+            <Text style={styles.seeAll}>{t('home.seeAll')}</Text>
+          </TouchableOpacity>
+        </View>
+        {groups.map((g) => (
+          <Card key={g.name}>
+            <View style={styles.row}>
+              <View style={styles.thumb}><Text style={styles.thumbIcon}>{g.icon}</Text></View>
+              <View style={{ flex: 1 }}>
+                <Title>{g.name}</Title>
+                <Muted>{g.meta}</Muted>
+              </View>
+            </View>
+            <Button label={t('home.join')} onPress={() => navigation.navigate('JoinCommunity')} />
+          </Card>
+        ))}
+
+        {/* Temple communities */}
+        <View style={styles.sectionHdr}>
+          <Text style={styles.section}>🛕 {t('home.templeCommunity')}</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('JoinCommunity')}>
+            <Text style={styles.seeAll}>{t('home.seeAll')}</Text>
+          </TouchableOpacity>
+        </View>
+        {temples.map((tm) => (
+          <Card key={tm.name}>
+            <View style={styles.row}>
+              <View style={styles.thumb}><Text style={styles.thumbIcon}>{tm.icon}</Text></View>
+              <View style={{ flex: 1 }}>
+                <Title>{tm.name}</Title>
+                <Muted>{tm.meta}</Muted>
+              </View>
+            </View>
+            <Button label={t('home.join')} onPress={() => navigation.navigate('JoinCommunity')} />
+          </Card>
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
@@ -90,41 +129,69 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: spacing.lg,
   },
-  greet: { color: colors.white, fontSize: 14, fontWeight: '600' },
+  greet: { color: colors.white, fontSize: 15, fontWeight: '600' },
   loc: { color: colors.cream, fontSize: 11, opacity: 0.85 },
   avatar: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
     backgroundColor: 'rgba(255,255,255,0.3)',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  body: { padding: spacing.lg },
-  search: {
-    backgroundColor: colors.white,
-    borderColor: colors.line,
-    borderWidth: 1,
-    borderRadius: radius.md,
-    padding: 12,
-    fontSize: 13,
-  },
-  liveCard: { backgroundColor: '#FFF7EF', borderColor: '#F0D3AD' },
-  section: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: colors.ink,
-    marginTop: 16,
+  body: { padding: spacing.lg, paddingBottom: 30 },
+  section: { fontSize: 15, fontWeight: '700', color: colors.ink },
+  sectionHdr: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 22,
     marginBottom: 4,
   },
-  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
-  chip: {
+  seeAll: { fontSize: 12, color: colors.saffron, fontWeight: '600' },
+  // practice grid
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginTop: 12,
+  },
+  tile: {
+    width: '48%',
     backgroundColor: colors.white,
     borderColor: colors.line,
     borderWidth: 1,
-    borderRadius: radius.pill,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+    borderRadius: radius.lg,
+    paddingVertical: 18,
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    marginBottom: 12,
   },
-  chipText: { fontSize: 11, color: '#5b4a38' },
+  tileIconWrap: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#FFF1DE',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tileIcon: { fontSize: 28 },
+  tileLabel: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: colors.ink,
+    textAlign: 'center',
+    marginTop: 10,
+  },
+  // cards
+  row: { flexDirection: 'row', gap: 10, alignItems: 'center' },
+  thumb: {
+    width: 46,
+    height: 46,
+    borderRadius: radius.md,
+    backgroundColor: colors.gold,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  thumbIcon: { fontSize: 20 },
 });
