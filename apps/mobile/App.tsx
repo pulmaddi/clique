@@ -24,6 +24,7 @@ import InboxScreen from './src/screens/InboxScreen';
 import SubscribeScreen from './src/screens/SubscribeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import MyProfileScreen from './src/screens/MyProfileScreen';
+import ChangePasswordScreen from './src/screens/ChangePasswordScreen';
 import PlaceholderScreen from './src/screens/PlaceholderScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -71,6 +72,7 @@ export default function App() {
           <Stack.Screen name="HostProfile" component={HostProfileScreen} options={{ title: '' }} />
           <Stack.Screen name="Subscribe" component={SubscribeScreen} options={{ title: 'Subscribe' }} />
           <Stack.Screen name="MyProfile" component={MyProfileScreen} options={{ title: t('profile.myProfile') }} />
+          <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} options={{ title: t('profile.changePassword') }} />
         </Stack.Navigator>
       </NavigationContainer>
       </AuthProvider>

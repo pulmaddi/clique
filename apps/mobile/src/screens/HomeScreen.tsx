@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, TextInput } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { MainTabParamList } from '../navigation/types';
@@ -10,7 +17,7 @@ import { useAuth } from '../lib/auth';
 
 type Props = BottomTabScreenProps<MainTabParamList, 'Home'>;
 
-export default function HomeScreen(_props: Props) {
+export default function HomeScreen({ navigation }: Props) {
   const { profile } = useAuth();
   const fullName = profile?.name?.trim() || t('profile.devotee');
   const firstName = fullName.split(' ')[0];
@@ -23,9 +30,13 @@ export default function HomeScreen(_props: Props) {
           <Text style={styles.greet}>🙏 {t('namaste')}, {firstName}</Text>
           {!!profile?.city && <Text style={styles.loc}>📍 {profile.city}</Text>}
         </View>
-        <View style={styles.avatar}>
-          <Text style={{ color: colors.white }}>{initial}</Text>
-        </View>
+        <TouchableOpacity
+          style={styles.avatar}
+          onPress={() => navigation.navigate('Profile')}
+          accessibilityLabel={t('tabs.profile')}
+        >
+          <Text style={{ color: colors.white, fontWeight: '700' }}>{initial}</Text>
+        </TouchableOpacity>
       </View>
 
       <ScrollView contentContainerStyle={styles.body}>

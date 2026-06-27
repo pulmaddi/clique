@@ -66,6 +66,12 @@ export default function ProfileScreen() {
             onPress={() => nav.navigate('MyProfile')}
           />
           <View style={styles.divider} />
+          <MenuRow
+            icon="🔑"
+            label={t('profile.changePassword')}
+            onPress={() => nav.navigate('ChangePassword')}
+          />
+          <View style={styles.divider} />
           <MenuRow icon="🔔" label={t('profile.notifications')} />
         </View>
 

@@ -6,6 +6,7 @@ export type RootStackParamList = {
   Login: undefined;
   Main: undefined;
   MyProfile: undefined;
+  ChangePassword: undefined;
   RitualBooking: { occasionId: string; title: string };
   LiveMeeting: { occasionInstanceId: string; title: string };
   HostProfile: { hostId: string };

@@ -11,6 +11,7 @@ import { supabase, isSupabaseConfigured } from './supabase';
 export type Profile = {
   id: string;
   name: string | null;
+  phone: string | null;
   language: string | null;
   city: string | null;
   state: string | null;
@@ -22,6 +23,12 @@ type AuthState = {
   profile: Profile;
   loading: boolean;
   refresh: () => Promise<void>;
+  updateProfile: (patch: {
+    name?: string;
+    phone?: string;
+    city?: string;
+    state?: string;
+  }) => Promise<void>;
   signOut: () => Promise<void>;
 };
 
@@ -31,6 +38,7 @@ const AuthContext = createContext<AuthState>({
   profile: null,
   loading: true,
   refresh: async () => {},
+  updateProfile: async () => {},
   signOut: async () => {},
 });
 
@@ -45,7 +53,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!userId || !isSupabaseConfigured) return setProfile(null);
     const { data } = await supabase
       .from('profiles')
-      .select('id,name,language,city,state')
+      .select('id,name,phone,language,city,state')
       .eq('id', userId)
       .maybeSingle();
     setProfile((data as Profile) ?? null);
@@ -75,6 +83,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       profile,
       loading,
       refresh: () => fetchProfile(session?.user.id),
+      updateProfile: async (patch) => {
+        const uid = session?.user.id;
+        if (!uid || !isSupabaseConfigured) return;
+        const { error } = await supabase.from('profiles').update(patch).eq('id', uid);
+        if (error) throw error;
+        await fetchProfile(uid);
+      },
       signOut: async () => {
         if (isSupabaseConfigured) await supabase.auth.signOut();
         setSession(null);

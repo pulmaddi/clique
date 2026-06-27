@@ -9,12 +9,16 @@
 create table if not exists public.profiles (
   id          uuid primary key references auth.users (id) on delete cascade,
   name        text,
+  phone       text,
   language    text default 'en',
   city        text,
   state       text,
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now()
 );
+
+-- Additive: ensures the column exists if the table was created earlier.
+alter table public.profiles add column if not exists phone text;
 
 -- 2. Row-Level Security: a user can see/edit only their own profile -
 alter table public.profiles enable row level security;
