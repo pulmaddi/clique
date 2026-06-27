@@ -5,20 +5,27 @@ export type Deity = {
   key: string;
   display_name: string;
   image_path: string | null;
+  audio_path: string | null;
 };
 
 // Fallback list if the deities table isn't set up yet (keeps the picker working).
 const FALLBACK: Deity[] = [
   'Ganesha', 'Shiva', 'Vishnu', 'Venkateswara', 'Rama', 'Krishna',
   'Hanuman', 'Lakshmi', 'Durga', 'Saraswati', 'Subrahmanya', 'Ayyappa',
-].map((n) => ({ key: n.toLowerCase(), display_name: n, image_path: null }));
+].map((n) => ({ key: n.toLowerCase(), display_name: n, image_path: null, audio_path: null }));
 
 let cache: Deity[] | null = null;
 
-/** Public URL for an image file in the 'deities' Storage bucket. */
-export function deityImageUrl(imagePath: string | null | undefined): string | null {
-  if (!imagePath || !isSupabaseConfigured) return null;
-  return supabase.storage.from('deities').getPublicUrl(imagePath).data.publicUrl;
+/** Public URL for a file in the 'deities' Storage bucket. */
+export function deityFileUrl(path: string | null | undefined): string | null {
+  if (!path || !isSupabaseConfigured) return null;
+  return supabase.storage.from('deities').getPublicUrl(path).data.publicUrl;
+}
+export const deityImageUrl = deityFileUrl;
+
+/** Force the next useDeities()/load() to re-fetch (call after admin edits). */
+export function clearDeitiesCache() {
+  cache = null;
 }
 
 async function load(): Promise<Deity[]> {
@@ -26,7 +33,7 @@ async function load(): Promise<Deity[]> {
   if (!isSupabaseConfigured) return FALLBACK;
   const { data, error } = await supabase
     .from('deities')
-    .select('key,display_name,image_path')
+    .select('key,display_name,image_path,audio_path')
     .order('sort_order', { ascending: true });
   cache = error || !data || data.length === 0 ? FALLBACK : (data as Deity[]);
   return cache;

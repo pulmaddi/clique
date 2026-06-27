@@ -8,10 +8,14 @@
 create table if not exists public.deities (
   key          text primary key,           -- slug, e.g. 'venkateswara'
   display_name text not null,               -- shown to users, e.g. 'Venkateswara'
-  image_path   text,                        -- file in the 'deities' bucket, e.g. 'venkateswara.png'
+  image_path   text,                        -- image file in the 'deities' bucket, e.g. 'venkateswara.png'
+  audio_path   text,                        -- mantra audio in the bucket, e.g. 'audio/venkateswara.mp3'
   sort_order   int  default 100,
   created_at   timestamptz default now()
 );
+
+-- Additive: ensure audio column exists if the table was created earlier.
+alter table public.deities add column if not exists audio_path text;
 
 -- Public read (anyone may view the catalog); writes only via dashboard/service role.
 alter table public.deities enable row level security;

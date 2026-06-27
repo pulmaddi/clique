@@ -15,7 +15,7 @@ const LANG_LABEL: Record<string, string> = {
 
 export default function ProfileScreen() {
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const { profile, email, signOut } = useAuth();
+  const { profile, email, isAdmin, signOut } = useAuth();
 
   const name = profile?.name?.trim() || t('profile.devotee');
   const initial = (name[0] || '🙏').toUpperCase();
@@ -73,6 +73,19 @@ export default function ProfileScreen() {
           <View style={styles.divider} />
           <MenuRow icon="🔔" label={t('profile.notifications')} />
         </View>
+
+        {isAdmin && (
+          <>
+            <Text style={styles.section}>{t('profile.adminSection')}</Text>
+            <View style={styles.card}>
+              <MenuRow
+                icon="🛠️"
+                label={t('profile.admin')}
+                onPress={() => nav.navigate('Admin')}
+              />
+            </View>
+          </>
+        )}
 
         <Text style={styles.section}>{t('profile.about')}</Text>
         <View style={styles.card}>

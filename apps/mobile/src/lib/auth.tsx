@@ -23,6 +23,7 @@ type AuthState = {
   session: Session | null;
   email: string | null;
   profile: Profile;
+  isAdmin: boolean;
   loading: boolean;
   refresh: () => Promise<void>;
   updateProfile: (patch: {
@@ -40,6 +41,7 @@ const AuthContext = createContext<AuthState>({
   session: null,
   email: null,
   profile: null,
+  isAdmin: false,
   loading: true,
   refresh: async () => {},
   updateProfile: async () => {},
@@ -51,7 +53,18 @@ export const useAuth = () => useContext(AuthContext);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const checkAdmin = async (userId: string | undefined) => {
+    if (!userId || !isSupabaseConfigured) return setIsAdmin(false);
+    const { data } = await supabase
+      .from('admins')
+      .select('user_id')
+      .eq('user_id', userId)
+      .maybeSingle();
+    setIsAdmin(!!data);
+  };
 
   const fetchProfile = async (userId: string | undefined) => {
     if (!userId || !isSupabaseConfigured) return setProfile(null);
@@ -74,11 +87,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     supabase.auth.getSession().then(async ({ data }) => {
       setSession(data.session);
       await fetchProfile(data.session?.user.id);
+      await checkAdmin(data.session?.user.id);
       setLoading(false);
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
       setSession(s);
       void fetchProfile(s?.user.id);
+      void checkAdmin(s?.user.id);
     });
     return () => sub.subscription.unsubscribe();
   }, []);
@@ -88,6 +103,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       session,
       email: session?.user.email ?? null,
       profile,
+      isAdmin,
       loading,
       refresh: () => fetchProfile(session?.user.id),
       updateProfile: async (patch) => {
@@ -101,9 +117,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (isSupabaseConfigured) await supabase.auth.signOut();
         setSession(null);
         setProfile(null);
+        setIsAdmin(false);
       },
     }),
-    [session, profile, loading],
+    [session, profile, isAdmin, loading],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
