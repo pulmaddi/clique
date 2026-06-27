@@ -4,13 +4,27 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/types';
 import { colors } from '../theme';
 import { t } from '../i18n';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
 export default function SplashScreen({ navigation }: Props) {
   useEffect(() => {
-    const id = setTimeout(() => navigation.replace('Welcome'), 1400);
-    return () => clearTimeout(id);
+    let cancelled = false;
+    const route = async () => {
+      // If already signed in, skip straight to the app.
+      if (isSupabaseConfigured) {
+        const { data } = await supabase.auth.getSession();
+        if (cancelled) return;
+        if (data.session) return navigation.replace('Main');
+      }
+      if (!cancelled) navigation.replace('Welcome');
+    };
+    const id = setTimeout(route, 1200);
+    return () => {
+      cancelled = true;
+      clearTimeout(id);
+    };
   }, [navigation]);
 
   return (

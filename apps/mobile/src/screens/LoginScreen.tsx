@@ -13,6 +13,7 @@ import type { RootStackParamList } from '../navigation/types';
 import { colors, radius, spacing } from '../theme';
 import { Button } from '../components/ui';
 import { t } from '../i18n';
+import { signIn, isSupabaseConfigured } from '../lib/supabase';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
@@ -22,13 +23,25 @@ export default function LoginScreen({ navigation }: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
 
-  const onSignIn = () => {
+  const onSignIn = async () => {
     if (!EMAIL_RE.test(email)) return setError('Please enter a valid email address.');
     if (password.length < 6) return setError('Please enter your password.');
     setError('');
-    // No authentication yet — proceed into the app.
-    navigation.replace('Main');
+
+    if (!isSupabaseConfigured) {
+      return navigation.replace('Main');
+    }
+    try {
+      setBusy(true);
+      await signIn(email.trim(), password);
+      navigation.replace('Main');
+    } catch (e: any) {
+      setError(e?.message ?? 'Could not sign in. Check your email and password.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -76,7 +89,7 @@ export default function LoginScreen({ navigation }: Props) {
 
       {!!error && <Text style={styles.error}>{error}</Text>}
 
-      <Button label={t('login.signIn')} onPress={onSignIn} />
+      <Button label={busy ? '…' : t('login.signIn')} onPress={onSignIn} />
       <TouchableOpacity onPress={() => navigation.replace('Register')}>
         <Text style={styles.alt}>{t('login.noAccount')}</Text>
       </TouchableOpacity>

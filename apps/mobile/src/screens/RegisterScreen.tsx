@@ -13,6 +13,7 @@ import type { RootStackParamList } from '../navigation/types';
 import { colors, radius, spacing } from '../theme';
 import { Button } from '../components/ui';
 import { t, setLocale } from '../i18n';
+import { signUpWithProfile, isSupabaseConfigured } from '../lib/supabase';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Register'>;
 const LANGS: { code: 'en' | 'hi' | 'te'; label: string }[] = [
@@ -30,15 +31,33 @@ export default function RegisterScreen({ navigation }: Props) {
   const [confirm, setConfirm] = useState('');
   const [lang, setLang] = useState<'en' | 'hi' | 'te'>('en');
   const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
 
-  const onCreate = () => {
+  const onCreate = async () => {
     if (name.trim().length < 2) return setError('Please enter your name.');
     if (!EMAIL_RE.test(email)) return setError('Please enter a valid email address.');
     if (password.length < 6) return setError('Password must be at least 6 characters.');
     if (password !== confirm) return setError('Passwords do not match.');
     setError('');
-    // No authentication yet — proceed into the app (email/password captured locally).
-    navigation.replace('Main');
+
+    if (!isSupabaseConfigured) {
+      // No DB configured yet — let the demo proceed without saving.
+      return navigation.replace('Main');
+    }
+    try {
+      setBusy(true);
+      await signUpWithProfile({
+        email: email.trim(),
+        password,
+        name: name.trim(),
+        language: lang,
+      });
+      navigation.replace('Main');
+    } catch (e: any) {
+      setError(e?.message ?? 'Could not create your account. Please try again.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -131,7 +150,10 @@ export default function RegisterScreen({ navigation }: Props) {
 
       {!!error && <Text style={styles.error}>{error}</Text>}
 
-      <Button label={t('register.createAccount')} onPress={onCreate} />
+      <Button
+        label={busy ? '…' : t('register.createAccount')}
+        onPress={onCreate}
+      />
       <Button
         label={t('register.haveAccount')}
         variant="outline"

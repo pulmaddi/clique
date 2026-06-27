@@ -58,6 +58,13 @@ Health check: `GET http://localhost:3000/api/v1/health`.
 - `apps/mobile/metro.config.js` makes Metro resolve the workspace root + shared package under pnpm — don't delete it.
 - **`.npmrc` sets `node-linker=hoisted`** — Expo/Metro need a flat `node_modules` to resolve transitive deps (`expo-modules-core`, `@babel/runtime`, …). Don't switch back to pnpm's isolated layout or web/native bundling breaks. After any install, run `pnpm --filter @clique/api prisma:generate`.
 
+### Supabase (registration + login)
+The mobile app uses **Supabase** directly for email/password auth + a `profiles`
+table. Set it up once per the guide in [`supabase/README.md`](../supabase/README.md):
+create a project → run `supabase/schema.sql` → disable email confirmation →
+copy URL + anon key into `apps/mobile/.env` (see `apps/mobile/.env.example`).
+Without those env vars the app runs in demo mode (no data saved).
+
 ### View the app in a PC browser (no emulator)
 ```bash
 pnpm --filter @clique/mobile dev   # then press 'w'
