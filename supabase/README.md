@@ -55,6 +55,12 @@ The deity catalog + images are managed entirely from the Supabase dashboard — 
 The app reads the catalog for the Ishta Daiva picker and shows the chosen deity's image on Home
 (falls back to a 🕉️ icon until an image is uploaded).
 
+### Manage it without the dashboard — the local Admin app
+For a friendlier workflow, use the **local admin web app** ([`admin/`](../admin/README.md)): an
+operator signs in and adds/edits deities + uploads images through a simple UI. It uses the
+public anon key + admin session (RLS restricts writes to admins). Run `supabase/admin.sql`
+to enable it.
+
 ## Verify
 - Register in the app → a row appears in **Authentication → Users** and in
   **Table editor → profiles**.
