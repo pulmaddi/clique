@@ -12,25 +12,12 @@ import { Button } from '../components/ui';
 import { t } from '../i18n';
 import { useAuth } from '../lib/auth';
 import { useLocale, LANGUAGES, type Lang } from '../lib/locale';
-
-const DEITIES = [
-  'Ganesha',
-  'Shiva',
-  'Vishnu',
-  'Venkateswara',
-  'Rama',
-  'Krishna',
-  'Hanuman',
-  'Lakshmi',
-  'Durga',
-  'Saraswati',
-  'Subrahmanya',
-  'Ayyappa',
-];
+import { useDeities } from '../lib/deities';
 
 export default function MyProfileScreen() {
   const { profile, email, updateProfile } = useAuth();
   const { lang, changeLang } = useLocale();
+  const { deities } = useDeities();
   const [name, setName] = useState(profile?.name ?? '');
   const [phone, setPhone] = useState(profile?.phone ?? '');
   const [ishta, setIshta] = useState(profile?.ishta_daiva ?? '');
@@ -113,17 +100,20 @@ export default function MyProfileScreen() {
           autoCapitalize="words"
         />
         <View style={styles.deities}>
-          {DEITIES.map((d) => (
-            <TouchableOpacity
-              key={d}
-              style={[styles.chip, ishta === d && styles.chipOn]}
-              onPress={() => setIshta(d)}
-            >
-              <Text style={[styles.chipText, ishta === d && styles.chipTextOn]}>
-                🙏 {d}
-              </Text>
-            </TouchableOpacity>
-          ))}
+          {deities.map((d) => {
+            const active = ishta === d.display_name;
+            return (
+              <TouchableOpacity
+                key={d.key}
+                style={[styles.chip, active && styles.chipOn]}
+                onPress={() => setIshta(d.display_name)}
+              >
+                <Text style={[styles.chipText, active && styles.chipTextOn]}>
+                  🙏 {d.display_name}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </View>
 

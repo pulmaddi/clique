@@ -41,6 +41,20 @@ cp apps/mobile/.env.example apps/mobile/.env
 ```
 Restart the Expo dev server after editing `.env`.
 
+## Deity images (Ishta Daiva)
+
+The deity catalog + images are managed entirely from the Supabase dashboard — **no custom admin page**.
+
+1. **Create the table + seed:** SQL Editor → run [`deities.sql`](deities.sql).
+2. **Create a Storage bucket:** Storage → **New bucket** → name **`deities`** → tick **Public bucket** → Create.
+3. **Upload images:** open the `deities` bucket → **Upload** files named to match each row's `image_path`
+   (e.g. `venkateswara.png`, `shiva.png`, …). Use properly-licensed images.
+4. **(Add a new deity later):** Table Editor → `deities` → **Insert row** (`key`, `display_name`, `image_path`),
+   then upload the matching image to the bucket. The app's picker and Home card update automatically — no release.
+
+The app reads the catalog for the Ishta Daiva picker and shows the chosen deity's image on Home
+(falls back to a 🕉️ icon until an image is uploaded).
+
 ## Verify
 - Register in the app → a row appears in **Authentication → Users** and in
   **Table editor → profiles**.

@@ -2,6 +2,7 @@ import React from 'react';
 import {
   View,
   Text,
+  Image,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -15,12 +16,15 @@ import { colors, radius, spacing } from '../theme';
 import { Card, Title, Muted, Button } from '../components/ui';
 import { t } from '../i18n';
 import { useAuth } from '../lib/auth';
+import { useDeities } from '../lib/deities';
 
 type Props = BottomTabScreenProps<MainTabParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
   const rootNav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { profile } = useAuth();
+  const { imageUrlForName } = useDeities();
+  const deityImg = imageUrlForName(profile?.ishta_daiva);
   const fullName = profile?.name?.trim() || t('profile.devotee');
   const firstName = fullName.split(' ')[0];
   const initial = (firstName[0] || '🙏').toUpperCase();
@@ -68,7 +72,11 @@ export default function HomeScreen({ navigation }: Props) {
               : rootNav.navigate('MyProfile')
           }
         >
-          <Text style={styles.featuredIcon}>🕉️</Text>
+          {deityImg ? (
+            <Image source={{ uri: deityImg }} style={styles.featuredImg} resizeMode="cover" />
+          ) : (
+            <Text style={styles.featuredIcon}>🕉️</Text>
+          )}
           <View style={{ flex: 1 }}>
             <Text style={styles.featuredTitle}>{t('home.ishtaDaivaPooja')}</Text>
             <Text style={styles.featuredSub}>
@@ -172,6 +180,12 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   featuredIcon: { fontSize: 30 },
+  featuredImg: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+  },
   featuredTitle: { color: colors.white, fontSize: 16, fontWeight: '800' },
   featuredSub: { color: colors.cream, fontSize: 12, opacity: 0.9, marginTop: 2 },
   featuredArrow: { color: colors.white, fontSize: 24, opacity: 0.8 },
