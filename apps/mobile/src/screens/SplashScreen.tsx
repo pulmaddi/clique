@@ -17,7 +17,7 @@ export default function SplashScreen({ navigation }: Props) {
     <View style={styles.container}>
       <View style={styles.logoCard}>
         <Image
-          source={require('../../assets/ishta-logo.jpeg')}
+          source={require('../../assets/ishta-logo.png')}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoCard: { backgroundColor: colors.white, borderRadius: 20, padding: 18 },
-  logo: { width: 150, height: 165 },
+  logo: { width: 150, height: 150 },
   tag: { color: colors.cream, fontSize: 13, marginTop: 16, opacity: 0.9 },
   langs: { color: colors.cream, fontSize: 11, position: 'absolute', bottom: 40, opacity: 0.8 },
 });

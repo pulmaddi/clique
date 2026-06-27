@@ -24,7 +24,7 @@ export default function WelcomeScreen({ navigation }: Props) {
         {/* Logo + identity */}
         <View style={styles.logoBadge}>
           <Image
-            source={require('../../assets/ishta-logo.jpeg')}
+            source={require('../../assets/ishta-logo.png')}
             style={styles.logo}
             resizeMode="contain"
           />
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logo: { width: 130, height: 143 },
+  logo: { width: 130, height: 130 },
   tag: { color: colors.cream, fontSize: 14, opacity: 0.9, marginTop: 14 },
   purpose: {
     color: colors.cream,

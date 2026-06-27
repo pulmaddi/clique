@@ -6,7 +6,10 @@
     "version": "0.1.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
+    "icon": "./assets/ishta-logo.png",
     "splash": {
+      "image": "./assets/ishta-logo.png",
+      "resizeMode": "contain",
       "backgroundColor": "#7A1F2B"
     },
     "assetBundlePatterns": ["**/*"],
