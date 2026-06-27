@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { colors } from './src/theme';
 import { t } from './src/i18n';
+import { AuthProvider } from './src/lib/auth';
 import type { RootStackParamList, MainTabParamList } from './src/navigation/types';
 
 import SplashScreen from './src/screens/SplashScreen';
@@ -21,6 +22,8 @@ import LiveMeetingScreen from './src/screens/LiveMeetingScreen';
 import HostProfileScreen from './src/screens/HostProfileScreen';
 import InboxScreen from './src/screens/InboxScreen';
 import SubscribeScreen from './src/screens/SubscribeScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
+import MyProfileScreen from './src/screens/MyProfileScreen';
 import PlaceholderScreen from './src/screens/PlaceholderScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -39,7 +42,7 @@ function MainTabs() {
       <Tab.Screen name="Rituals" component={RitualsScreen} options={{ title: t('tabs.rituals') }} />
       <Tab.Screen name="Events" component={PlaceholderScreen} options={{ title: t('tabs.events') }} />
       <Tab.Screen name="Inbox" component={InboxScreen} options={{ title: t('tabs.inbox') }} />
-      <Tab.Screen name="Profile" component={PlaceholderScreen} options={{ title: t('tabs.profile') }} />
+      <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: t('tabs.profile') }} />
     </Tab.Navigator>
   );
 }
@@ -47,6 +50,7 @@ function MainTabs() {
 export default function App() {
   return (
     <SafeAreaProvider>
+      <AuthProvider>
       <NavigationContainer>
         <StatusBar style="light" />
         <Stack.Navigator
@@ -66,8 +70,10 @@ export default function App() {
           <Stack.Screen name="LiveMeeting" component={LiveMeetingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="HostProfile" component={HostProfileScreen} options={{ title: '' }} />
           <Stack.Screen name="Subscribe" component={SubscribeScreen} options={{ title: 'Subscribe' }} />
+          <Stack.Screen name="MyProfile" component={MyProfileScreen} options={{ title: t('profile.myProfile') }} />
         </Stack.Navigator>
       </NavigationContainer>
+      </AuthProvider>
     </SafeAreaProvider>
   );
 }

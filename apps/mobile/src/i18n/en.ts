@@ -43,4 +43,20 @@ export default {
   },
   rituals: { title: 'Virtual Rituals' },
   common: { join: 'Join live', book: 'Book', rsvp: 'RSVP', pay: 'Pay' },
+  profile: {
+    devotee: 'Devotee',
+    account: 'Account',
+    about: 'About',
+    myProfile: 'My Profile',
+    notifications: 'Notifications',
+    terms: 'Terms & Conditions',
+    logout: 'Log out',
+  },
+  myProfile: {
+    subtitle: 'Your account details.',
+    name: 'Name',
+    email: 'Email',
+    language: 'Preferred language',
+    location: 'Location',
+  },
 };

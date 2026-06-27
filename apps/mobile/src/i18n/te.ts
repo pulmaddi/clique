@@ -43,4 +43,20 @@ export default {
   },
   rituals: { title: 'వర్చువల్ పూజలు' },
   common: { join: 'ప్రత్యక్షంగా చేరండి', book: 'బుక్ చేయండి', rsvp: 'హాజరు', pay: 'చెల్లించండి' },
+  profile: {
+    devotee: 'భక్తుడు',
+    account: 'ఖాతా',
+    about: 'గురించి',
+    myProfile: 'నా ప్రొఫైల్',
+    notifications: 'నోటిఫికేషన్లు',
+    terms: 'నిబంధనలు & షరతులు',
+    logout: 'లాగ్ అవుట్',
+  },
+  myProfile: {
+    subtitle: 'మీ ఖాతా వివరాలు.',
+    name: 'పేరు',
+    email: 'ఇమెయిల్',
+    language: 'ఇష్టమైన భాష',
+    location: 'ప్రాంతం',
+  },
 };

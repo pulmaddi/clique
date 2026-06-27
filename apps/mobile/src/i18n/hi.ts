@@ -43,4 +43,20 @@ export default {
   },
   rituals: { title: 'आभासी अनुष्ठान' },
   common: { join: 'लाइव जुड़ें', book: 'बुक करें', rsvp: 'उपस्थिति', pay: 'भुगतान' },
+  profile: {
+    devotee: 'भक्त',
+    account: 'खाता',
+    about: 'परिचय',
+    myProfile: 'मेरी प्रोफ़ाइल',
+    notifications: 'सूचनाएं',
+    terms: 'नियम और शर्तें',
+    logout: 'लॉग आउट',
+  },
+  myProfile: {
+    subtitle: 'आपके खाते का विवरण।',
+    name: 'नाम',
+    email: 'ईमेल',
+    language: 'पसंदीदा भाषा',
+    location: 'स्थान',
+  },
 };

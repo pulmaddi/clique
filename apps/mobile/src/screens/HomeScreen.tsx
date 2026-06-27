@@ -6,19 +6,25 @@ import type { MainTabParamList } from '../navigation/types';
 import { colors, radius, spacing } from '../theme';
 import { Card, Title, Muted, Button, LiveBadge } from '../components/ui';
 import { t } from '../i18n';
+import { useAuth } from '../lib/auth';
 
 type Props = BottomTabScreenProps<MainTabParamList, 'Home'>;
 
 export default function HomeScreen(_props: Props) {
+  const { profile } = useAuth();
+  const fullName = profile?.name?.trim() || t('profile.devotee');
+  const firstName = fullName.split(' ')[0];
+  const initial = (firstName[0] || '🙏').toUpperCase();
+
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <View style={styles.topbar}>
         <View>
-          <Text style={styles.greet}>🙏 {t('namaste')}, Anjali</Text>
-          <Text style={styles.loc}>📍 Hyderabad</Text>
+          <Text style={styles.greet}>🙏 {t('namaste')}, {firstName}</Text>
+          {!!profile?.city && <Text style={styles.loc}>📍 {profile.city}</Text>}
         </View>
         <View style={styles.avatar}>
-          <Text style={{ color: colors.white }}>A</Text>
+          <Text style={{ color: colors.white }}>{initial}</Text>
         </View>
       </View>
 
