@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
+  Image,
   TextInput,
   StyleSheet,
   TouchableOpacity,
@@ -38,7 +39,13 @@ export default function RegisterScreen({ navigation }: Props) {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.logo}>🪔</Text>
+      <View style={styles.logoWrap}>
+        <Image
+          source={require('../../assets/ishta-logo.png')}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+      </View>
       <Text style={styles.h1}>{t('register.title')}</Text>
       <Text style={styles.sub}>{t('register.subtitle')}</Text>
 
@@ -89,7 +96,14 @@ export default function RegisterScreen({ navigation }: Props) {
 
 const styles = StyleSheet.create({
   container: { padding: spacing.xl, backgroundColor: colors.cream, flexGrow: 1 },
-  logo: { fontSize: 40, textAlign: 'center', marginTop: 30 },
+  logoWrap: {
+    alignSelf: 'center',
+    marginTop: 24,
+    backgroundColor: colors.white,
+    borderRadius: 16,
+    padding: 10,
+  },
+  logo: { width: 88, height: 88 },
   h1: { fontSize: 22, fontWeight: '700', color: colors.maroon, marginTop: 12 },
   sub: { fontSize: 13, color: colors.muted, marginBottom: 16 },
   input: {
