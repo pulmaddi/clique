@@ -29,6 +29,7 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import MyProfileScreen from './src/screens/MyProfileScreen';
 import ChangePasswordScreen from './src/screens/ChangePasswordScreen';
 import AdminScreen from './src/screens/AdminScreen';
+import PoojaScreen from './src/screens/PoojaScreen';
 
 // Emoji tab icon helper (no extra icon library needed).
 const tabIcon =
@@ -107,6 +108,7 @@ export default function App() {
           <Stack.Screen name="MyProfile" component={MyProfileScreen} options={{ title: t('profile.myProfile') }} />
           <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} options={{ title: t('profile.changePassword') }} />
           <Stack.Screen name="Admin" component={AdminScreen} options={{ title: t('profile.admin') }} />
+          <Stack.Screen name="Pooja" component={PoojaScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
       </AuthProvider>

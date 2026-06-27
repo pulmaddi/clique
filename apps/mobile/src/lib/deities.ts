@@ -50,15 +50,20 @@ export function useDeities() {
     };
   }, []);
 
-  /** Resolve an image URL for a stored ishta_daiva value (matches name or key). */
-  const imageUrlForName = (name: string | null | undefined): string | null => {
-    if (!name) return null;
+  /** Find a deity row by a stored ishta_daiva value (matches display name or key). */
+  const findByName = (name: string | null | undefined): Deity | undefined => {
+    if (!name) return undefined;
     const n = name.trim().toLowerCase();
-    const match = deities.find(
+    return deities.find(
       (d) => d.display_name.toLowerCase() === n || d.key === n,
     );
-    return deityImageUrl(match?.image_path);
   };
 
-  return { deities, imageUrlForName };
+  const imageUrlForName = (name: string | null | undefined): string | null =>
+    deityFileUrl(findByName(name)?.image_path);
+
+  const audioUrlForName = (name: string | null | undefined): string | null =>
+    deityFileUrl(findByName(name)?.audio_path);
+
+  return { deities, findByName, imageUrlForName, audioUrlForName };
 }

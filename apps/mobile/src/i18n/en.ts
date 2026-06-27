@@ -75,6 +75,14 @@ export default {
     codePlaceholder: 'Enter meeting code',
     joinByCode: 'Join meeting',
   },
+  pooja: {
+    title: 'Ishta Daiva Pooja',
+    subtitle: 'Take a moment for your prayer',
+    playing: 'Mantra playing…',
+    paused: 'Paused — tap to resume',
+    noAudio: 'No mantra audio yet for this deity.',
+    end: 'End Pooja',
+  },
   rituals: { title: 'Virtual Rituals' },
   common: { join: 'Join live', book: 'Book', rsvp: 'RSVP', pay: 'Pay' },
   profile: {

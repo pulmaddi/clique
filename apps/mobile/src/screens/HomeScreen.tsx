@@ -68,7 +68,7 @@ export default function HomeScreen({ navigation }: Props) {
           activeOpacity={0.85}
           onPress={() =>
             profile?.ishta_daiva
-              ? navigation.navigate('TodaysPuja')
+              ? rootNav.navigate('Pooja')
               : rootNav.navigate('MyProfile')
           }
         >
