@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logo: { width: 150, height: 150 },
-  tag: { color: colors.cream, fontSize: 14, opacity: 0.9, marginTop: 14 },
+  logo: { width: 160, height: 160 },
+  tag: { color: colors.cream, fontSize: 14, opacity: 0.9, marginTop: -24 },
   purpose: {
     color: colors.cream,
     fontSize: 15,
