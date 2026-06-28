@@ -93,8 +93,11 @@ export default function HomeScreen({ navigation }: Props) {
                 rootNav.navigate('Pooja', { deityName: todaysDeity().deity })
               }
             >
-              {/* TODO: replace with assets/VaaraPooja.png once added */}
-              <Text style={styles.idpEmojiPlaceholder}>🗓️</Text>
+              <Image
+                source={require('../../assets/WeekdayPooja.png')}
+                style={styles.idpIcon}
+                resizeMode="contain"
+              />
             </TouchableOpacity>
             <Text style={styles.idpLabel} numberOfLines={2}>
               {t('home.weekdayPooja')}
@@ -187,11 +190,10 @@ const styles = StyleSheet.create({
   idpItem: { width: 92, alignItems: 'center' },
   idpBtn: { width: 84, height: 84, alignItems: 'center', justifyContent: 'center' },
   idpIcon: { width: 84, height: 84 },
-  idpEmojiPlaceholder: { fontSize: 52 },
   idpLabel: {
     width: 92,
     fontSize: 12,
-    fontWeight: '800',
+    fontWeight: '400',
     color: colors.maroon,
     marginTop: 6,
     textAlign: 'center',

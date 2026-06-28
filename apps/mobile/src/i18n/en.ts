@@ -52,7 +52,7 @@ export default {
     seeAll: 'See all',
     join: 'Join',
     ishtaDaivaPooja: 'Perform Ishta Daiva Pooja',
-    weekdayPooja: 'Weekday Pooja',
+    weekdayPooja: 'Vaara Pooja',
     today: 'Today',
     forYour: 'For your',
     setIshtaDaiva: 'Set your Ishta Daiva in profile →',
