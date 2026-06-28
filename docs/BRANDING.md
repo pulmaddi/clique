@@ -23,6 +23,7 @@
 - **Palette:** saffron / marigold (`#E8741E`), deep maroon (`#7A1F2B`), warm cream (`#FFF6EC`), tulsi green accent (`#2E7D4F`), gold highlights (`#C99A2E`).
 - **Tone:** reverent, calm, uncluttered; generous spacing; large readable type for older devotees.
 - **Iconography:** simple line icons with devotional motifs (diya, kalash, om, bell, lotus) — used as accents, not clutter.
+- **Transparent logos/icons sit directly on the background** — **never add a white/cream/opaque container, circle, tile, or "badge" behind a transparent logo or icon.** Supply assets with transparent backgrounds and place them as-is so they blend with the screen.
 - **Type:** a humanist sans with good Devanagari + Telugu script coverage (e.g. Noto Sans / Noto Sans Devanagari / Noto Sans Telugu).
 
 > The mobile app, landing pages and wireframes display the **Ishta** brand. The platform layer (packages, infra, backend) uses **Clique**.

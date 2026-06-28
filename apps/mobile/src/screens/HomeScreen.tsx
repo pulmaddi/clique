@@ -59,10 +59,10 @@ export default function HomeScreen({ navigation }: Props) {
       </View>
 
       <ScrollView contentContainerStyle={styles.body}>
-        {/* Ishta Daiva Pooja — compact icon (tap = open pooja) */}
+        {/* Ishta Daiva Pooja — compact icon (no background), left-aligned */}
         <View style={styles.idpWrap}>
           <TouchableOpacity
-            style={styles.idpIconCircle}
+            style={styles.idpBtn}
             activeOpacity={0.8}
             onPress={() =>
               profile?.ishta_daiva
@@ -75,8 +75,10 @@ export default function HomeScreen({ navigation }: Props) {
               style={styles.idpIcon}
               resizeMode="contain"
             />
+            <Text style={styles.idpLabel} numberOfLines={2}>
+              {t('home.ishtaDaivaPooja')}
+            </Text>
           </TouchableOpacity>
-          <Text style={styles.idpLabel}>{t('home.ishtaDaivaPooja')}</Text>
         </View>
 
         {/* Daily practices — compact icon row (tap target = icon only) */}
@@ -157,20 +159,17 @@ const styles = StyleSheet.create({
   },
   body: { padding: spacing.lg, paddingBottom: 30 },
   section: { fontSize: 15, fontWeight: '700', color: colors.ink },
-  idpWrap: { alignItems: 'center', marginTop: 4, marginBottom: 6 },
-  idpIconCircle: {
-    width: 92,
-    height: 92,
-    borderRadius: 46,
-    backgroundColor: '#FFF1DE',
-    borderWidth: 1,
-    borderColor: colors.line,
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
+  idpWrap: { alignItems: 'flex-start', marginTop: 4, marginBottom: 10 },
+  idpBtn: { width: 92, alignItems: 'center' },
   idpIcon: { width: 84, height: 84 },
-  idpLabel: { fontSize: 14, fontWeight: '800', color: colors.maroon, marginTop: 8 },
+  idpLabel: {
+    width: 92,
+    fontSize: 12,
+    fontWeight: '800',
+    color: colors.maroon,
+    marginTop: 6,
+    textAlign: 'center',
+  },
   sectionHdr: {
     flexDirection: 'row',
     justifyContent: 'space-between',
