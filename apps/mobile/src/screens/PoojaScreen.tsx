@@ -111,11 +111,16 @@ const Dot = ({ color }: { color: string }) => (
 export default function PoojaScreen({ navigation, route }: Props) {
   const { profile } = useAuth();
   const { imageUrlForName, audioUrlForName } = useDeities();
-  const { today } = useWeekdayDeities();
+  const { rows, today } = useWeekdayDeities();
 
-  // Vaara Pooja resolves today's weekday deity (own image/audio); otherwise
-  // use the chosen Ishta Daiva resolved from the deity catalog.
-  const weekday = route.params?.vaara ? today() : null;
+  // Vaara Pooja resolves a weekday deity (own image/audio): a specific `day`
+  // (admin preview) or today (`vaara`); otherwise the chosen Ishta Daiva.
+  const weekday =
+    route.params?.day != null
+      ? rows.find((r) => r.day === route.params!.day) ?? null
+      : route.params?.vaara
+      ? today()
+      : null;
   const deityName = weekday?.deity_name || route.params?.deityName || profile?.ishta_daiva || '';
   const imageUrl = weekday ? deityFileUrl(weekday.image_path) : imageUrlForName(deityName);
   const audioUrl = weekday ? deityFileUrl(weekday.audio_path) : audioUrlForName(deityName);

@@ -128,6 +128,7 @@ export default {
     catalog: 'ఇష్ట దైవ జాబితా',
     edit: 'సవరించు',
     delete: 'తొలగించు',
+    preview: 'ప్రివ్యూ',
     vaaraHint: 'ప్రతి వారానికి దైవం, చిత్రం, మంత్ర ఆడియోను సెట్ చేయండి.',
   },
   myProfile: {

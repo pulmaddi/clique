@@ -128,6 +128,7 @@ export default {
     catalog: 'Ishta Daiva catalog',
     edit: 'Edit',
     delete: 'Delete',
+    preview: 'Preview',
     vaaraHint: 'Set the deity, image and mantra audio for each weekday.',
   },
   myProfile: {

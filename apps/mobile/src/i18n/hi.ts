@@ -128,6 +128,7 @@ export default {
     catalog: 'इष्ट देव सूची',
     edit: 'संपादित करें',
     delete: 'हटाएं',
+    preview: 'पूर्वावलोकन',
     vaaraHint: 'हर वार के लिए देव, छवि और मंत्र ऑडियो सेट करें।',
   },
   myProfile: {

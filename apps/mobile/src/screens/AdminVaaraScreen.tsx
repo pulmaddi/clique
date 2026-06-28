@@ -7,6 +7,9 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '../navigation/types';
 import { colors, radius, spacing } from '../theme';
 import { Button } from '../components/ui';
 import { t } from '../i18n';
@@ -21,6 +24,7 @@ import {
 import { deityFileUrl } from '../lib/deities';
 
 function WeekdayRow({ row }: { row: WeekdayDeity }) {
+  const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [name, setName] = useState(row.deity_name ?? '');
   const [imagePath, setImagePath] = useState(row.image_path ?? null);
   const [audioPath, setAudioPath] = useState(row.audio_path ?? null);
@@ -122,7 +126,18 @@ function WeekdayRow({ row }: { row: WeekdayDeity }) {
 
       {!!err && <Text style={styles.err}>{err}</Text>}
       {!!msg && <Text style={styles.ok}>{msg}</Text>}
-      <Button label={busy ? '…' : t('admin.save')} onPress={save} />
+      <View style={styles.actions}>
+        <View style={{ flex: 1 }}>
+          <Button label={busy ? '…' : t('admin.save')} onPress={save} />
+        </View>
+        <View style={{ flex: 1 }}>
+          <Button
+            label={t('admin.preview')}
+            variant="outline"
+            onPress={() => nav.navigate('Pooja', { day: row.day })}
+          />
+        </View>
+      </View>
     </View>
   );
 }
@@ -192,4 +207,5 @@ const styles = StyleSheet.create({
   fileNote: { fontSize: 11, color: colors.muted, marginTop: 4 },
   err: { color: colors.live, fontSize: 13, marginTop: 4, marginBottom: 4 },
   ok: { color: colors.green, fontSize: 13, marginTop: 4, marginBottom: 4, fontWeight: '600' },
+  actions: { flexDirection: 'row', gap: 10 },
 });
