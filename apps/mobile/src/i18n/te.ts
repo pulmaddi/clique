@@ -39,6 +39,7 @@ export default {
     upcoming: 'రాబోయే సందర్భాలు',
     following: 'అనుసరిస్తున్నారు',
     dailyPractices: 'నిత్య సాధన',
+    dailyRituals: 'దైనిక పూజలు',
     todaysPooja: 'నేటి పూజ చేయండి',
     vratha: 'వ్రతం (పూజ) చేయండి',
     japa: 'జపం చేయండి',

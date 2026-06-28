@@ -39,6 +39,7 @@ export default {
     upcoming: 'आगामी अवसर',
     following: 'अनुसरण कर रहे हैं',
     dailyPractices: 'दैनिक साधना',
+    dailyRituals: 'दैनिक अनुष्ठान',
     todaysPooja: 'आज की पूजा करें',
     vratha: 'व्रत (अनुष्ठान) करें',
     japa: 'जप करें',

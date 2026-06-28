@@ -27,13 +27,6 @@ export default function HomeScreen({ navigation }: Props) {
   const firstName = fullName.split(' ')[0];
   const initial = (firstName[0] || '🙏').toUpperCase();
 
-  const practices: { icon: string; label: string; onPress: () => void }[] = [
-    { icon: '🪔', label: t('home.shortPooja'), onPress: () => navigation.navigate('TodaysPuja') },
-    { icon: '🌺', label: t('home.shortVratha'), onPress: () => navigation.navigate('TodaysPuja') },
-    { icon: '📿', label: t('home.shortJapa'), onPress: () => navigation.navigate('TodaysPuja') },
-    { icon: '📜', label: t('home.shortSlokas'), onPress: () => navigation.navigate('TodaysPuja') },
-  ];
-
   const groups = [
     { icon: '🧘', name: 'Swami Anand', meta: 'Guru · Hindi · Rishikesh' },
     { icon: '👥', name: 'Bhakti Mandali', meta: 'Group · Telugu · Vijayawada' },
@@ -60,7 +53,8 @@ export default function HomeScreen({ navigation }: Props) {
       </View>
 
       <ScrollView contentContainerStyle={styles.body}>
-        {/* Pooja shortcuts — compact icons (no background), left-aligned */}
+        {/* Daily Rituals — pooja shortcuts (compact icons, no background) */}
+        <Text style={styles.section}>{t('home.dailyRituals')}</Text>
         <View style={styles.idpWrap}>
           {/* Ishta Daiva Pooja */}
           <View style={styles.idpItem}>
@@ -76,7 +70,7 @@ export default function HomeScreen({ navigation }: Props) {
               <Image
                 source={require('../../assets/IsthaDaivaPooja.png')}
                 style={styles.idpIcon}
-                resizeMode="contain"
+                resizeMode="cover"
               />
             </TouchableOpacity>
             <Text style={styles.idpLabel} numberOfLines={2}>
@@ -96,7 +90,7 @@ export default function HomeScreen({ navigation }: Props) {
               <Image
                 source={require('../../assets/WeekdayPooja.png')}
                 style={styles.idpIcon}
-                resizeMode="contain"
+                resizeMode="cover"
               />
             </TouchableOpacity>
             <Text style={styles.idpLabel} numberOfLines={2}>
@@ -106,19 +100,6 @@ export default function HomeScreen({ navigation }: Props) {
               {t('home.today')}: {todaysDeity().deity}
             </Text>
           </View>
-        </View>
-
-        {/* Daily practices — compact icon row (tap target = icon only) */}
-        <Text style={styles.section}>{t('home.dailyPractices')}</Text>
-        <View style={styles.practiceRow}>
-          {practices.map((p) => (
-            <View key={p.label} style={styles.practiceItem}>
-              <TouchableOpacity style={styles.iconCircle} onPress={p.onPress} activeOpacity={0.7}>
-                <Text style={styles.iconEmoji}>{p.icon}</Text>
-              </TouchableOpacity>
-              <Text style={styles.iconCaption} numberOfLines={2}>{p.label}</Text>
-            </View>
-          ))}
         </View>
 
         {/* Spiritual groups */}
@@ -188,7 +169,13 @@ const styles = StyleSheet.create({
   section: { fontSize: 15, fontWeight: '700', color: colors.ink },
   idpWrap: { flexDirection: 'row', gap: 18, marginTop: 4, marginBottom: 10 },
   idpItem: { width: 92, alignItems: 'center' },
-  idpBtn: { width: 84, height: 84, alignItems: 'center', justifyContent: 'center' },
+  idpBtn: {
+    width: 84,
+    height: 84,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
   idpIcon: { width: 84, height: 84 },
   idpLabel: {
     width: 92,
@@ -207,31 +194,6 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   seeAll: { fontSize: 12, color: colors.saffron, fontWeight: '600' },
-  // compact practice icons
-  practiceRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 12,
-  },
-  practiceItem: { width: '23%', alignItems: 'center' },
-  iconCircle: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#FFF1DE',
-    borderWidth: 1,
-    borderColor: colors.line,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  iconEmoji: { fontSize: 28 },
-  iconCaption: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: colors.ink,
-    textAlign: 'center',
-    marginTop: 6,
-  },
   // cards
   row: { flexDirection: 'row', gap: 10, alignItems: 'center' },
   thumb: {

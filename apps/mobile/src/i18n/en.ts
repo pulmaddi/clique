@@ -39,6 +39,7 @@ export default {
     upcoming: 'Upcoming occasions',
     following: 'Following',
     dailyPractices: 'Daily Practices',
+    dailyRituals: 'Daily Rituals',
     todaysPooja: "Perform Today's Pooja",
     vratha: 'Perform Vratha (Ritual)',
     japa: 'Perform Japa',
