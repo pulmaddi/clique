@@ -169,11 +169,8 @@ const styles = StyleSheet.create({
   logoWrap: {
     alignSelf: 'center',
     marginTop: 16,
-    backgroundColor: colors.white,
-    borderRadius: 16,
-    padding: 10,
   },
-  logo: { width: 80, height: 80 },
+  logo: { width: 96, height: 96 },
   h1: { fontSize: 22, fontWeight: '700', color: colors.maroon, marginTop: 18 },
   sub: { fontSize: 13, color: colors.muted, marginTop: 4, marginBottom: 8 },
   field: { marginTop: 14 },

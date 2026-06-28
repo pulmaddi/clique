@@ -93,13 +93,10 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.maroon },
   scroll: { alignItems: 'center', paddingTop: 64, paddingHorizontal: spacing.xl, paddingBottom: 20 },
   logoBadge: {
-    borderRadius: 20,
-    backgroundColor: colors.white,
-    padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logo: { width: 130, height: 130 },
+  logo: { width: 150, height: 150 },
   tag: { color: colors.cream, fontSize: 14, opacity: 0.9, marginTop: 14 },
   purpose: {
     color: colors.cream,

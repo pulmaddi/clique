@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logoCard: { backgroundColor: colors.white, borderRadius: 20, padding: 18 },
-  logo: { width: 150, height: 150 },
+  logoCard: { alignItems: 'center', justifyContent: 'center' },
+  logo: { width: 170, height: 170 },
   tag: { color: colors.cream, fontSize: 13, marginTop: 16, opacity: 0.9 },
   langs: { color: colors.cream, fontSize: 11, position: 'absolute', bottom: 40, opacity: 0.8 },
 });
