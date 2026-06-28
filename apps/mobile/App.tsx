@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Text } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -31,11 +31,11 @@ import ChangePasswordScreen from './src/screens/ChangePasswordScreen';
 import AdminScreen from './src/screens/AdminScreen';
 import PoojaScreen from './src/screens/PoojaScreen';
 
-// Emoji tab icon helper (no extra icon library needed).
+// Crisp vector tab icons from @expo/vector-icons (bundled with Expo).
 const tabIcon =
-  (emoji: string) =>
-  ({ focused }: { focused: boolean }) =>
-    <Text style={{ fontSize: 18, opacity: focused ? 1 : 0.55 }}>{emoji}</Text>;
+  (name: keyof typeof MaterialCommunityIcons.glyphMap) =>
+  ({ color, size }: { color: string; size: number }) =>
+    <MaterialCommunityIcons name={name} size={size ?? 24} color={color} />;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -45,30 +45,37 @@ function MainTabs() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.saffron,
-        tabBarInactiveTintColor: colors.muted,
+        tabBarActiveTintColor: '#F2B441', // turmeric/gold — high contrast on maroon
+        tabBarInactiveTintColor: 'rgba(255,255,255,0.6)',
         tabBarLabelStyle: { fontSize: 10 },
+        tabBarStyle: {
+          backgroundColor: colors.maroon,
+          borderTopColor: 'rgba(255,255,255,0.12)',
+          height: 60,
+          paddingBottom: 6,
+          paddingTop: 6,
+        },
       }}
     >
       <Tab.Screen
         name="Home"
         component={HomeScreen}
-        options={{ title: t('tabs.home'), tabBarIcon: tabIcon('🏠') }}
+        options={{ title: t('tabs.home'), tabBarIcon: tabIcon('home-variant') }}
       />
       <Tab.Screen
         name="TodaysPuja"
         component={RitualsScreen}
-        options={{ title: t('tabs.todaysPuja'), tabBarIcon: tabIcon('🪔') }}
+        options={{ title: t('tabs.todaysPuja'), tabBarIcon: tabIcon('candle') }}
       />
       <Tab.Screen
         name="JoinCommunity"
         component={JoinCommunityScreen}
-        options={{ title: t('tabs.joinCommunity'), tabBarIcon: tabIcon('👥') }}
+        options={{ title: t('tabs.joinCommunity'), tabBarIcon: tabIcon('account-group') }}
       />
       <Tab.Screen
         name="JoinMeeting"
         component={JoinMeetingScreen}
-        options={{ title: t('tabs.joinMeeting'), tabBarIcon: tabIcon('🎥') }}
+        options={{ title: t('tabs.joinMeeting'), tabBarIcon: tabIcon('video') }}
       />
     </Tab.Navigator>
   );
