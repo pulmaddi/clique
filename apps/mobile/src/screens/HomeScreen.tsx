@@ -16,15 +16,12 @@ import { colors, radius, spacing } from '../theme';
 import { Card, Title, Muted, Button } from '../components/ui';
 import { t } from '../i18n';
 import { useAuth } from '../lib/auth';
-import { useDeities } from '../lib/deities';
 
 type Props = BottomTabScreenProps<MainTabParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
   const rootNav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { profile } = useAuth();
-  const { imageUrlForName } = useDeities();
-  const deityImg = imageUrlForName(profile?.ishta_daiva);
   const fullName = profile?.name?.trim() || t('profile.devotee');
   const firstName = fullName.split(' ')[0];
   const initial = (firstName[0] || '🙏').toUpperCase();
@@ -62,31 +59,25 @@ export default function HomeScreen({ navigation }: Props) {
       </View>
 
       <ScrollView contentContainerStyle={styles.body}>
-        {/* Featured: Ishta Daiva Pooja */}
-        <TouchableOpacity
-          style={styles.featured}
-          activeOpacity={0.85}
-          onPress={() =>
-            profile?.ishta_daiva
-              ? rootNav.navigate('Pooja')
-              : rootNav.navigate('MyProfile')
-          }
-        >
-          {deityImg ? (
-            <Image source={{ uri: deityImg }} style={styles.featuredImg} resizeMode="cover" />
-          ) : (
-            <Text style={styles.featuredIcon}>🕉️</Text>
-          )}
-          <View style={{ flex: 1 }}>
-            <Text style={styles.featuredTitle}>{t('home.ishtaDaivaPooja')}</Text>
-            <Text style={styles.featuredSub}>
-              {profile?.ishta_daiva
-                ? `${t('home.forYour')} ${profile.ishta_daiva} 🙏`
-                : t('home.setIshtaDaiva')}
-            </Text>
-          </View>
-          <Text style={styles.featuredArrow}>›</Text>
-        </TouchableOpacity>
+        {/* Ishta Daiva Pooja — compact icon (tap = open pooja) */}
+        <View style={styles.idpWrap}>
+          <TouchableOpacity
+            style={styles.idpIconCircle}
+            activeOpacity={0.8}
+            onPress={() =>
+              profile?.ishta_daiva
+                ? rootNav.navigate('Pooja')
+                : rootNav.navigate('MyProfile')
+            }
+          >
+            <Image
+              source={require('../../assets/IsthaDaivaPooja.png')}
+              style={styles.idpIcon}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <Text style={styles.idpLabel}>{t('home.ishtaDaivaPooja')}</Text>
+        </View>
 
         {/* Daily practices — compact icon row (tap target = icon only) */}
         <Text style={styles.section}>{t('home.dailyPractices')}</Text>
@@ -166,24 +157,20 @@ const styles = StyleSheet.create({
   },
   body: { padding: spacing.lg, paddingBottom: 30 },
   section: { fontSize: 15, fontWeight: '700', color: colors.ink },
-  featured: {
-    flexDirection: 'row',
+  idpWrap: { alignItems: 'center', marginTop: 4, marginBottom: 6 },
+  idpIconCircle: {
+    width: 92,
+    height: 92,
+    borderRadius: 46,
+    backgroundColor: '#FFF1DE',
+    borderWidth: 1,
+    borderColor: colors.line,
     alignItems: 'center',
-    gap: 12,
-    backgroundColor: colors.maroon,
-    borderRadius: radius.lg,
-    padding: 16,
+    justifyContent: 'center',
+    overflow: 'hidden',
   },
-  featuredIcon: { fontSize: 30 },
-  featuredImg: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    backgroundColor: 'rgba(255,255,255,0.15)',
-  },
-  featuredTitle: { color: colors.white, fontSize: 16, fontWeight: '800' },
-  featuredSub: { color: colors.cream, fontSize: 12, opacity: 0.9, marginTop: 2 },
-  featuredArrow: { color: colors.white, fontSize: 24, opacity: 0.8 },
+  idpIcon: { width: 84, height: 84 },
+  idpLabel: { fontSize: 14, fontWeight: '800', color: colors.maroon, marginTop: 8 },
   sectionHdr: {
     flexDirection: 'row',
     justifyContent: 'space-between',
