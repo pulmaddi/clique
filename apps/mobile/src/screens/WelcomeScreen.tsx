@@ -78,11 +78,12 @@ export default function WelcomeScreen({ navigation }: Props) {
             onPress={() => accepted && navigation.navigate('Register')}
           />
         </View>
+
+        <GoogleButton disabled={!accepted} />
+
         {!accepted && (
           <Text style={styles.hint}>{t('welcome.acceptHint')}</Text>
         )}
-
-        {accepted && <GoogleButton />}
 
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.signin}>{t('welcome.haveAccount')}</Text>

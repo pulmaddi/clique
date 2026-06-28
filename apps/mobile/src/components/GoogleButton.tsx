@@ -8,11 +8,18 @@ import { t } from '../i18n';
  * "Continue with Google" button. Implemented for web (Supabase OAuth redirect).
  * Hidden on native for now (needs an in-app browser flow — follow-up).
  */
-export default function GoogleButton({ onError }: { onError?: (m: string) => void }) {
+export default function GoogleButton({
+  onError,
+  disabled,
+}: {
+  onError?: (m: string) => void;
+  disabled?: boolean;
+}) {
   const [busy, setBusy] = useState(false);
   if (Platform.OS !== 'web' || !isSupabaseConfigured) return null;
 
   const onPress = async () => {
+    if (disabled) return;
     try {
       setBusy(true);
       await signInWithGoogle(); // redirects the page to Google
@@ -23,7 +30,12 @@ export default function GoogleButton({ onError }: { onError?: (m: string) => voi
   };
 
   return (
-    <TouchableOpacity style={styles.btn} onPress={onPress} activeOpacity={0.85} disabled={busy}>
+    <TouchableOpacity
+      style={[styles.btn, (disabled || busy) && styles.disabled]}
+      onPress={onPress}
+      activeOpacity={0.85}
+      disabled={disabled || busy}
+    >
       <Text style={styles.g}>G</Text>
       <Text style={styles.label}>{busy ? '…' : t('auth.google')}</Text>
     </TouchableOpacity>
@@ -43,6 +55,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     marginTop: 10,
   },
+  disabled: { opacity: 0.45 },
   g: { color: '#4285F4', fontSize: 18, fontWeight: '800' },
   label: { color: colors.ink, fontSize: 14, fontWeight: '700' },
 });
