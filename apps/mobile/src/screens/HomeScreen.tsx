@@ -30,10 +30,10 @@ export default function HomeScreen({ navigation }: Props) {
   const initial = (firstName[0] || '🙏').toUpperCase();
 
   const practices: { icon: string; label: string; onPress: () => void }[] = [
-    { icon: '🪔', label: t('home.todaysPooja'), onPress: () => navigation.navigate('TodaysPuja') },
-    { icon: '🌺', label: t('home.vratha'), onPress: () => navigation.navigate('TodaysPuja') },
-    { icon: '📿', label: t('home.japa'), onPress: () => navigation.navigate('TodaysPuja') },
-    { icon: '📜', label: t('home.slokas'), onPress: () => navigation.navigate('TodaysPuja') },
+    { icon: '🪔', label: t('home.shortPooja'), onPress: () => navigation.navigate('TodaysPuja') },
+    { icon: '🌺', label: t('home.shortVratha'), onPress: () => navigation.navigate('TodaysPuja') },
+    { icon: '📿', label: t('home.shortJapa'), onPress: () => navigation.navigate('TodaysPuja') },
+    { icon: '📜', label: t('home.shortSlokas'), onPress: () => navigation.navigate('TodaysPuja') },
   ];
 
   const groups = [
@@ -88,21 +88,16 @@ export default function HomeScreen({ navigation }: Props) {
           <Text style={styles.featuredArrow}>›</Text>
         </TouchableOpacity>
 
-        {/* Daily practices */}
+        {/* Daily practices — compact icon row (tap target = icon only) */}
         <Text style={styles.section}>{t('home.dailyPractices')}</Text>
-        <View style={styles.grid}>
+        <View style={styles.practiceRow}>
           {practices.map((p) => (
-            <TouchableOpacity
-              key={p.label}
-              style={styles.tile}
-              onPress={p.onPress}
-              activeOpacity={0.8}
-            >
-              <View style={styles.tileIconWrap}>
-                <Text style={styles.tileIcon}>{p.icon}</Text>
-              </View>
-              <Text style={styles.tileLabel}>{p.label}</Text>
-            </TouchableOpacity>
+            <View key={p.label} style={styles.practiceItem}>
+              <TouchableOpacity style={styles.iconCircle} onPress={p.onPress} activeOpacity={0.7}>
+                <Text style={styles.iconEmoji}>{p.icon}</Text>
+              </TouchableOpacity>
+              <Text style={styles.iconCaption} numberOfLines={2}>{p.label}</Text>
+            </View>
           ))}
         </View>
 
@@ -197,39 +192,30 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   seeAll: { fontSize: 12, color: colors.saffron, fontWeight: '600' },
-  // practice grid
-  grid: {
+  // compact practice icons
+  practiceRow: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     justifyContent: 'space-between',
     marginTop: 12,
   },
-  tile: {
-    width: '48%',
-    backgroundColor: colors.white,
-    borderColor: colors.line,
-    borderWidth: 1,
-    borderRadius: radius.lg,
-    paddingVertical: 18,
-    paddingHorizontal: 12,
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  tileIconWrap: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+  practiceItem: { width: '23%', alignItems: 'center' },
+  iconCircle: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     backgroundColor: '#FFF1DE',
+    borderWidth: 1,
+    borderColor: colors.line,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  tileIcon: { fontSize: 28 },
-  tileLabel: {
-    fontSize: 13,
+  iconEmoji: { fontSize: 28 },
+  iconCaption: {
+    fontSize: 11,
     fontWeight: '600',
     color: colors.ink,
     textAlign: 'center',
-    marginTop: 10,
+    marginTop: 6,
   },
   // cards
   row: { flexDirection: 'row', gap: 10, alignItems: 'center' },
