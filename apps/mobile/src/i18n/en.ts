@@ -2,6 +2,7 @@ export default {
   appName: 'Ishta',
   tagline: 'Light Your Inner Path',
   namaste: 'Namaste',
+  auth: { google: 'Continue with Google', or: 'or' },
   welcome: {
     purpose:
       'Join temples, Gurus & devotee groups for live darshan & satsang and guided virtual rituals — devotion, without distance.',

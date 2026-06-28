@@ -1,6 +1,9 @@
 import 'react-native-url-polyfill/auto';
+import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
+
+const isWeb = Platform.OS === 'web';
 
 // Public (anon) credentials — safe to ship in the client. Row-Level Security
 // in Supabase is what actually protects the data. Set these via env:
@@ -23,9 +26,25 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     storage: AsyncStorage,
     autoRefreshToken: true,
     persistSession: true,
-    detectSessionInUrl: false, // we don't use OAuth redirect links
+    // On web we must parse the OAuth tokens from the redirect URL (Google login).
+    detectSessionInUrl: isWeb,
   },
 });
+
+/**
+ * Google OAuth sign-in. Fully supported on web (redirects the page to Google
+ * and back). On native it needs an in-app browser flow (follow-up).
+ */
+export async function signInWithGoogle() {
+  const redirectTo =
+    isWeb && typeof window !== 'undefined' ? window.location.origin : undefined;
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo },
+  });
+  if (error) throw error;
+  return data;
+}
 
 /** Sign up with email/password; name & language go into user metadata + profile. */
 export async function signUpWithProfile(params: {

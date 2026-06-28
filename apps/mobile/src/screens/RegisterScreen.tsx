@@ -12,6 +12,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/types';
 import { colors, radius, spacing } from '../theme';
 import { Button } from '../components/ui';
+import GoogleButton from '../components/GoogleButton';
 import { t, setLocale } from '../i18n';
 import { signUpWithProfile, isSupabaseConfigured } from '../lib/supabase';
 
@@ -159,6 +160,7 @@ export default function RegisterScreen({ navigation }: Props) {
         variant="outline"
         onPress={() => navigation.navigate('Login')}
       />
+      <GoogleButton onError={setError} />
     </ScrollView>
   );
 }

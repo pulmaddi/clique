@@ -11,6 +11,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/types';
 import { colors, radius, spacing } from '../theme';
 import { Button } from '../components/ui';
+import GoogleButton from '../components/GoogleButton';
 import { t } from '../i18n';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Welcome'>;
@@ -80,6 +81,8 @@ export default function WelcomeScreen({ navigation }: Props) {
         {!accepted && (
           <Text style={styles.hint}>{t('welcome.acceptHint')}</Text>
         )}
+
+        {accepted && <GoogleButton />}
 
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.signin}>{t('welcome.haveAccount')}</Text>

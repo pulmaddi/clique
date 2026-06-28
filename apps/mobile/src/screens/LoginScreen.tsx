@@ -12,6 +12,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/types';
 import { colors, radius, spacing } from '../theme';
 import { Button } from '../components/ui';
+import GoogleButton from '../components/GoogleButton';
 import { t } from '../i18n';
 import { signIn, isSupabaseConfigured } from '../lib/supabase';
 
@@ -90,6 +91,7 @@ export default function LoginScreen({ navigation }: Props) {
       {!!error && <Text style={styles.error}>{error}</Text>}
 
       <Button label={busy ? '…' : t('login.signIn')} onPress={onSignIn} />
+      <GoogleButton onError={setError} />
       <TouchableOpacity onPress={() => navigation.replace('Register')}>
         <Text style={styles.alt}>{t('login.noAccount')}</Text>
       </TouchableOpacity>
