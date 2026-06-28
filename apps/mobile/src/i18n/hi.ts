@@ -52,6 +52,8 @@ export default {
     seeAll: 'सभी देखें',
     join: 'जुड़ें',
     ishtaDaivaPooja: 'इष्ट देव पूजा करें',
+    weekdayPooja: 'वार पूजा',
+    today: 'आज',
     forYour: 'आपके',
     setIshtaDaiva: 'प्रोफ़ाइल में अपना इष्ट देव चुनें →',
   },

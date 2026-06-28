@@ -52,6 +52,8 @@ export default {
     seeAll: 'అన్నీ చూడండి',
     join: 'చేరండి',
     ishtaDaivaPooja: 'ఇష్ట దైవ పూజ చేయండి',
+    weekdayPooja: 'వార పూజ',
+    today: 'ఈ రోజు',
     forYour: 'మీ',
     setIshtaDaiva: 'ప్రొఫైల్‌లో మీ ఇష్ట దైవాన్ని ఎంచుకోండి →',
   },

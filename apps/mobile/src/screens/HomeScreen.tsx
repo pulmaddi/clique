@@ -16,6 +16,7 @@ import { colors, radius, spacing } from '../theme';
 import { Card, Title, Muted, Button } from '../components/ui';
 import { t } from '../i18n';
 import { useAuth } from '../lib/auth';
+import { todaysDeity } from '../lib/weekdayDeities';
 
 type Props = BottomTabScreenProps<MainTabParamList, 'Home'>;
 
@@ -59,26 +60,49 @@ export default function HomeScreen({ navigation }: Props) {
       </View>
 
       <ScrollView contentContainerStyle={styles.body}>
-        {/* Ishta Daiva Pooja — compact icon (no background), left-aligned */}
+        {/* Pooja shortcuts — compact icons (no background), left-aligned */}
         <View style={styles.idpWrap}>
-          <TouchableOpacity
-            style={styles.idpBtn}
-            activeOpacity={0.8}
-            onPress={() =>
-              profile?.ishta_daiva
-                ? rootNav.navigate('Pooja')
-                : rootNav.navigate('MyProfile')
-            }
-          >
-            <Image
-              source={require('../../assets/IsthaDaivaPooja.png')}
-              style={styles.idpIcon}
-              resizeMode="contain"
-            />
+          {/* Ishta Daiva Pooja */}
+          <View style={styles.idpItem}>
+            <TouchableOpacity
+              style={styles.idpBtn}
+              activeOpacity={0.8}
+              onPress={() =>
+                profile?.ishta_daiva
+                  ? rootNav.navigate('Pooja')
+                  : rootNav.navigate('MyProfile')
+              }
+            >
+              <Image
+                source={require('../../assets/IsthaDaivaPooja.png')}
+                style={styles.idpIcon}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
             <Text style={styles.idpLabel} numberOfLines={2}>
               {t('home.ishtaDaivaPooja')}
             </Text>
-          </TouchableOpacity>
+          </View>
+
+          {/* Weekday Pooja — opens today's deity */}
+          <View style={styles.idpItem}>
+            <TouchableOpacity
+              style={styles.idpBtn}
+              activeOpacity={0.8}
+              onPress={() =>
+                rootNav.navigate('Pooja', { deityName: todaysDeity().deity })
+              }
+            >
+              {/* TODO: replace with assets/VaaraPooja.png once added */}
+              <Text style={styles.idpEmojiPlaceholder}>🗓️</Text>
+            </TouchableOpacity>
+            <Text style={styles.idpLabel} numberOfLines={2}>
+              {t('home.weekdayPooja')}
+            </Text>
+            <Text style={styles.idpSub} numberOfLines={1}>
+              {t('home.today')}: {todaysDeity().deity}
+            </Text>
+          </View>
         </View>
 
         {/* Daily practices — compact icon row (tap target = icon only) */}
@@ -159,9 +183,11 @@ const styles = StyleSheet.create({
   },
   body: { padding: spacing.lg, paddingBottom: 30 },
   section: { fontSize: 15, fontWeight: '700', color: colors.ink },
-  idpWrap: { alignItems: 'flex-start', marginTop: 4, marginBottom: 10 },
-  idpBtn: { width: 92, alignItems: 'center' },
+  idpWrap: { flexDirection: 'row', gap: 18, marginTop: 4, marginBottom: 10 },
+  idpItem: { width: 92, alignItems: 'center' },
+  idpBtn: { width: 84, height: 84, alignItems: 'center', justifyContent: 'center' },
   idpIcon: { width: 84, height: 84 },
+  idpEmojiPlaceholder: { fontSize: 52 },
   idpLabel: {
     width: 92,
     fontSize: 12,
@@ -170,6 +196,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     textAlign: 'center',
   },
+  idpSub: { fontSize: 10, color: colors.muted, marginTop: 2, textAlign: 'center' },
   sectionHdr: {
     flexDirection: 'row',
     justifyContent: 'space-between',

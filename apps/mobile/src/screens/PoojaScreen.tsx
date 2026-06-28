@@ -107,11 +107,11 @@ const Dot = ({ color }: { color: string }) => (
   <View style={{ width: 11, height: 11, borderRadius: 6, backgroundColor: color }} />
 );
 
-export default function PoojaScreen({ navigation }: Props) {
+export default function PoojaScreen({ navigation, route }: Props) {
   const { profile } = useAuth();
   const { imageUrlForName, audioUrlForName } = useDeities();
 
-  const deityName = profile?.ishta_daiva || '';
+  const deityName = route.params?.deityName || profile?.ishta_daiva || '';
   const imageUrl = imageUrlForName(deityName);
   const audioUrl = audioUrlForName(deityName);
 
