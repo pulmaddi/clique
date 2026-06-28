@@ -35,8 +35,8 @@ export function clearWeekdayCache() {
   cache = null;
 }
 
+// Always fetches fresh (so admin edits show up); updates the cache too.
 async function load(): Promise<WeekdayDeity[]> {
-  if (cache) return cache;
   if (!isSupabaseConfigured) return WEEKDAY_DEITIES;
   const { data, error } = await supabase
     .from('weekday_deities')
@@ -46,7 +46,8 @@ async function load(): Promise<WeekdayDeity[]> {
   return cache;
 }
 
-/** Hook: the 7 weekday rows (from Supabase, fallback to static) + today's entry. */
+/** Hook: the 7 weekday rows (from Supabase, fallback to static) + today's entry.
+ *  Refetches on every mount so newly-uploaded images/audio appear. */
 export function useWeekdayDeities() {
   const [rows, setRows] = useState<WeekdayDeity[]>(cache ?? WEEKDAY_DEITIES);
 
@@ -61,5 +62,5 @@ export function useWeekdayDeities() {
   const today = (): WeekdayDeity =>
     rows.find((r) => r.day === new Date().getDay()) ?? todaysDeity();
 
-  return { rows, today, imageUrl: deityFileUrl, audioUrl: deityFileUrl };
+  return { rows, today, fileUrl: deityFileUrl };
 }

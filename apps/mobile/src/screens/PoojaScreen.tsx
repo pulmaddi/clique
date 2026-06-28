@@ -16,7 +16,8 @@ import type { RootStackParamList } from '../navigation/types';
 import { colors } from '../theme';
 import { t } from '../i18n';
 import { useAuth } from '../lib/auth';
-import { useDeities } from '../lib/deities';
+import { useDeities, deityFileUrl } from '../lib/deities';
+import { useWeekdayDeities } from '../lib/weekdayDeities';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Pooja'>;
 const useNative = Platform.OS !== 'web';
@@ -110,11 +111,14 @@ const Dot = ({ color }: { color: string }) => (
 export default function PoojaScreen({ navigation, route }: Props) {
   const { profile } = useAuth();
   const { imageUrlForName, audioUrlForName } = useDeities();
+  const { today } = useWeekdayDeities();
 
-  const deityName = route.params?.deityName || profile?.ishta_daiva || '';
-  // Explicit URLs (e.g. Vaara Pooja) win; else resolve from the deity catalog.
-  const imageUrl = route.params?.imageUrl || imageUrlForName(deityName);
-  const audioUrl = route.params?.audioUrl || audioUrlForName(deityName);
+  // Vaara Pooja resolves today's weekday deity (own image/audio); otherwise
+  // use the chosen Ishta Daiva resolved from the deity catalog.
+  const weekday = route.params?.vaara ? today() : null;
+  const deityName = weekday?.deity_name || route.params?.deityName || profile?.ishta_daiva || '';
+  const imageUrl = weekday ? deityFileUrl(weekday.image_path) : imageUrlForName(deityName);
+  const audioUrl = weekday ? deityFileUrl(weekday.audio_path) : audioUrlForName(deityName);
 
   const soundRef = useRef<Audio.Sound | null>(null);
   const [fx, setFx] = useState<Record<string, boolean>>({});

@@ -17,7 +17,6 @@ import { Card, Title, Muted, Button } from '../components/ui';
 import { t } from '../i18n';
 import { useAuth } from '../lib/auth';
 import { useWeekdayDeities } from '../lib/weekdayDeities';
-import { deityFileUrl } from '../lib/deities';
 
 type Props = BottomTabScreenProps<MainTabParamList, 'Home'>;
 
@@ -85,14 +84,7 @@ export default function HomeScreen({ navigation }: Props) {
             <TouchableOpacity
               style={styles.idpBtn}
               activeOpacity={0.8}
-              onPress={() => {
-                const d = today();
-                rootNav.navigate('Pooja', {
-                  deityName: d.deity_name ?? undefined,
-                  imageUrl: deityFileUrl(d.image_path) ?? undefined,
-                  audioUrl: deityFileUrl(d.audio_path) ?? undefined,
-                });
-              }}
+              onPress={() => rootNav.navigate('Pooja', { vaara: true })}
             >
               <Image
                 source={require('../../assets/WeekdayPooja.png')}
