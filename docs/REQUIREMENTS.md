@@ -77,6 +77,7 @@ Access is **role-based (RBAC)**. A single user may hold multiple roles (e.g. a d
 - **FR-23** Participants can make **offerings** during the ritual (digital flowers/diya/items), some free, some paid add-ons.
 - **FR-24** After the ritual, participants receive a digital **prasad/blessing** (image/audio/video/certificate); physical fulfilment is a later phase.
 - **FR-25** Group rituals (many participants in one ceremony) and personal/dedicated rituals (host performs for one devotee/family) are both supported.
+- **FR-26a** **Vaara Pooja (weekday deity):** each weekday is associated with a deity (Sun=Aditya, Mon=Shiva, Tue=Hanuman, Wed=Ganesha, Thu=Sai Baba, Fri=Lakshmi, Sat=Venkateswara). The app surfaces a generic **"Vaara Pooja"** entry that opens the pooja for *today's* deity, reusing the deity catalog's image + mantra audio. (Monday=Shiva is a sensible default — confirm.)
 
 ### 3.6 Communication & broadcasts
 - **FR-26** Hosts broadcast **group-level messages/announcements** (text + media) to all followers or a subscriber segment; delivered via push + in-app inbox.
