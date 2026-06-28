@@ -109,6 +109,7 @@ export default {
     logout: 'Log out',
     adminSection: 'Admin',
     admin: 'Admin — Ishta Daiva',
+    adminVaara: 'Admin — Vaara Pooja',
   },
   admin: {
     notAdmin: 'You do not have admin access.',
@@ -127,6 +128,7 @@ export default {
     catalog: 'Ishta Daiva catalog',
     edit: 'Edit',
     delete: 'Delete',
+    vaaraHint: 'Set the deity, image and mantra audio for each weekday.',
   },
   myProfile: {
     subtitle: 'View and update your account details.',

@@ -109,6 +109,7 @@ export default {
     logout: 'लॉग आउट',
     adminSection: 'एडमिन',
     admin: 'एडमिन — इष्ट देव',
+    adminVaara: 'एडमिन — वार पूजा',
   },
   admin: {
     notAdmin: 'आपके पास एडमिन अधिकार नहीं हैं।',
@@ -127,6 +128,7 @@ export default {
     catalog: 'इष्ट देव सूची',
     edit: 'संपादित करें',
     delete: 'हटाएं',
+    vaaraHint: 'हर वार के लिए देव, छवि और मंत्र ऑडियो सेट करें।',
   },
   myProfile: {
     subtitle: 'अपने खाते का विवरण देखें और अपडेट करें।',

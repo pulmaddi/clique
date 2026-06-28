@@ -83,6 +83,12 @@ export default function ProfileScreen() {
                 label={t('profile.admin')}
                 onPress={() => nav.navigate('Admin')}
               />
+              <View style={styles.divider} />
+              <MenuRow
+                icon="📅"
+                label={t('profile.adminVaara')}
+                onPress={() => nav.navigate('AdminVaara')}
+              />
             </View>
           </>
         )}

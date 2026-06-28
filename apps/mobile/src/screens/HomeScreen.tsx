@@ -16,13 +16,15 @@ import { colors, radius, spacing } from '../theme';
 import { Card, Title, Muted, Button } from '../components/ui';
 import { t } from '../i18n';
 import { useAuth } from '../lib/auth';
-import { todaysDeity } from '../lib/weekdayDeities';
+import { useWeekdayDeities } from '../lib/weekdayDeities';
+import { deityFileUrl } from '../lib/deities';
 
 type Props = BottomTabScreenProps<MainTabParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
   const rootNav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { profile } = useAuth();
+  const { today } = useWeekdayDeities();
   const fullName = profile?.name?.trim() || t('profile.devotee');
   const firstName = fullName.split(' ')[0];
   const initial = (firstName[0] || '🙏').toUpperCase();
@@ -83,9 +85,14 @@ export default function HomeScreen({ navigation }: Props) {
             <TouchableOpacity
               style={styles.idpBtn}
               activeOpacity={0.8}
-              onPress={() =>
-                rootNav.navigate('Pooja', { deityName: todaysDeity().deity })
-              }
+              onPress={() => {
+                const d = today();
+                rootNav.navigate('Pooja', {
+                  deityName: d.deity_name ?? undefined,
+                  imageUrl: deityFileUrl(d.image_path) ?? undefined,
+                  audioUrl: deityFileUrl(d.audio_path) ?? undefined,
+                });
+              }}
             >
               <Image
                 source={require('../../assets/WeekdayPooja.png')}
@@ -97,7 +104,7 @@ export default function HomeScreen({ navigation }: Props) {
               {t('home.weekdayPooja')}
             </Text>
             <Text style={styles.idpSub} numberOfLines={1}>
-              {t('home.today')}: {todaysDeity().deity}
+              {t('home.today')}: {today().deity_name}
             </Text>
           </View>
         </View>

@@ -112,8 +112,9 @@ export default function PoojaScreen({ navigation, route }: Props) {
   const { imageUrlForName, audioUrlForName } = useDeities();
 
   const deityName = route.params?.deityName || profile?.ishta_daiva || '';
-  const imageUrl = imageUrlForName(deityName);
-  const audioUrl = audioUrlForName(deityName);
+  // Explicit URLs (e.g. Vaara Pooja) win; else resolve from the deity catalog.
+  const imageUrl = route.params?.imageUrl || imageUrlForName(deityName);
+  const audioUrl = route.params?.audioUrl || audioUrlForName(deityName);
 
   const soundRef = useRef<Audio.Sound | null>(null);
   const [fx, setFx] = useState<Record<string, boolean>>({});

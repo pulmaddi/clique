@@ -109,6 +109,7 @@ export default {
     logout: 'లాగ్ అవుట్',
     adminSection: 'అడ్మిన్',
     admin: 'అడ్మిన్ — ఇష్ట దైవం',
+    adminVaara: 'అడ్మిన్ — వార పూజ',
   },
   admin: {
     notAdmin: 'మీకు అడ్మిన్ యాక్సెస్ లేదు.',
@@ -127,6 +128,7 @@ export default {
     catalog: 'ఇష్ట దైవ జాబితా',
     edit: 'సవరించు',
     delete: 'తొలగించు',
+    vaaraHint: 'ప్రతి వారానికి దైవం, చిత్రం, మంత్ర ఆడియోను సెట్ చేయండి.',
   },
   myProfile: {
     subtitle: 'మీ ఖాతా వివరాలను చూసి నవీకరించండి.',
