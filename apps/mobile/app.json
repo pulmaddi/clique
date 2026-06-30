@@ -21,7 +21,8 @@
       "package": "com.ishta.app"
     },
     "web": {
-      "bundler": "metro"
+      "bundler": "metro",
+      "favicon": "./assets/ishta-logo.png"
     },
     "extra": {
       "apiBaseUrl": "http://localhost:3000/api/v1"
